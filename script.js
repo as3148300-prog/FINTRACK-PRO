@@ -103,3 +103,60 @@ document.querySelector("#adminname").textContent = username.toUpperCase();
 }
 completeloginpage();
  
+ function themetoggle(){
+    const toggle = document.querySelector('.ft-toggle');
+let isLight = false;
+
+function applyTheme(light) {
+  const root = document.documentElement;
+  if (light) {
+    root.style.setProperty('--main-bg', '#f0f2f5');
+    root.style.setProperty('--sidebar-bg', '#ffffff');
+    root.style.setProperty('--card-bg', '#ffffff');
+    root.style.setProperty('--active-bg', '#e8edf5');
+    root.style.setProperty('--border-dark', '#d0d7e3');
+    root.style.setProperty('--text-white', '#1a2236');
+    root.style.setProperty('--text-gray', '#4a5568');
+    root.style.setProperty('--text-muted', '#718096');
+    root.style.setProperty('--body-bg', '#f0f2f5');
+    toggle.style.backgroundColor = '#f6c90e';
+    toggle.style.transition = 'all 0.3s ease';
+    toggle.style.setProperty('--knob-pos', '3px');
+  } else {
+    root.style.setProperty('--main-bg', '#151c2c');
+    root.style.setProperty('--sidebar-bg', '#1a2236');
+    root.style.setProperty('--card-bg', '#1e2a40');
+    root.style.setProperty('--active-bg', '#2a3a5c');
+    root.style.setProperty('--border-dark', '#3b4f70');
+    root.style.setProperty('--text-white', '#fff');
+    root.style.setProperty('--text-gray', '#a0aec0');
+    root.style.setProperty('--text-muted', '#7a8db0');
+    root.style.setProperty('--body-bg', 'white');
+    toggle.style.backgroundColor = 'var(--secondary-blue)';
+    toggle.style.transition = 'all 0.3s ease';
+  }
+}
+
+toggle.style.cursor = 'pointer';
+toggle.style.transition = 'all 1s ease';
+
+// CSS se knob animate karne ke liye
+const style = document.createElement('style');
+style.textContent = `
+  .ft-toggle::after {
+    transition: left 1s ease, right 1s ease;
+  }
+  .ft-toggle.light::after {
+    right: auto;
+    left: 3px;
+  }
+`;
+document.head.appendChild(style);
+
+toggle.addEventListener('click', () => {
+  isLight = !isLight;
+  toggle.classList.toggle('light', isLight);
+  applyTheme(isLight);
+});
+ }
+ themetoggle()
