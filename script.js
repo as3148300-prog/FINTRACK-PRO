@@ -151,10 +151,41 @@ function completeloginpage() {
     });
 
     // LOGOUT
-    document.querySelector("#logoutBtn").addEventListener("click", function () {
-        localStorage.setItem("loggedIn", "false");
-        document.querySelector(".loginsection").style.display = "flex";
-        document.querySelector(".section").style.display = "none";
-    });
+   
 }
 completeloginpage();
+
+ function settingopenandclosefnc(){
+    document.querySelector("#settings").addEventListener("click",function(){
+     document.querySelector(".ft-main").style.display = "none"
+     document.querySelector("#settings").style.backgroundColor = "var(--active-bg)"
+      document.querySelector(".ft-nav-item").style.backgroundColor = "transparent"
+      document.querySelector(".settingsection").style.display = "block"
+})
+document.querySelector(".ft-nav-item").addEventListener("click",function(){
+     document.querySelector(".ft-main").style.display = "flex"
+ document.querySelector("#settings").style.backgroundColor = "transparent"
+      document.querySelector(".ft-nav-item").style.backgroundColor = "var(--active-bg)"
+      document.querySelector(".settingsection").style.display = "none"
+     
+})
+ }
+ settingopenandclosefnc()
+
+function addtransectionbtn(){
+     document.querySelector(".ft-add-btn").addEventListener("click",function(){
+    document.querySelector(".modal-overlay").style.display = "flex"
+ })
+
+ document.querySelector(".modal-close").addEventListener("click",function(){
+    document.querySelector(".modal-overlay").style.display = "none"
+ })
+
+ 
+}
+addtransectionbtn()
+
+document.querySelector(".ft-logout-btn").addEventListener("click",function(){
+    document.querySelector(".loginsection").style.display = "flex"
+    document.querySelector(".section").style.display = "none"
+})

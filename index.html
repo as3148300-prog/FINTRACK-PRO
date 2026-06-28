@@ -7,12 +7,9 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
-<link
-  href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
-  rel="stylesheet"
-/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -45,118 +42,198 @@
                     </div>
                     <div class="field">
                         <label>Password</label>
-                        <input id="signuppassword"  type="password" placeholder="Choose a password">
+                        <input id="signuppassword" type="password" placeholder="Choose a password">
                     </div>
                     <div class="field">
                         <label>Confirm Password</label>
-                        <input id="signupconfirmpassword"  type="password" placeholder="Re-enter password">
+                        <input id="signupconfirmpassword" type="password" placeholder="Re-enter password">
                     </div>
                     <button id="upbtn" class="btn btnsu">Sign Up</button>
                 </div>
             </div>
         </div>
         <div class="section">
+            
             <div class="ft-wrap">
- 
-  <!-- Sidebar -->
-  <div class="ft-sidebar">
-    <div>
-      <div class="ft-logo-title"> <h3><i class="ri-stack-line"></i> FinTrack Pro</h3></div>
-      <div class="ft-logo-sub">Enterprise Finance</div>
-    </div>
-    <nav class="ft-nav">
-      <a class="ft-nav-item active">&#9783; Dashboard</a>
-      <a class="ft-nav-item">&#9881; Settings</a>
-    </nav>
-    <button class="ft-add-btn">+ Add Transaction</button>
-  </div>
- 
-  <!-- Main -->
-  <div class="ft-main">
- 
-    <!-- Topbar -->
-    <div class="ft-topbar">
-      <div>
-        <div class="ft-page-title">Financial Overview</div>
-        <div class="ft-page-sub">Real-time tracking application</div>
+
+                <!-- Sidebar -->
+                <div class="ft-sidebar">
+                    <div>
+                        <div class="ft-logo-title">
+                            <h3><i class="ri-stack-line"></i> FinTrack Pro</h3>
+                        </div>
+                        <div class="ft-logo-sub">Enterprise Finance</div>
+                    </div>
+                    <nav class="ft-nav">
+                        <a class="ft-nav-item active">&#9783; Dashboard</a>
+                        <a id="settings" class="ft-nav-item"  >&#9881; Settings</a>
+                    </nav>
+                    <button class="ft-add-btn">+ Add Transaction</button>
+                </div>
+
+                <!-- Main -->
+                   <div class="settingsection">
+                <div class="ft-settings-box">
+  <div class="ft-section-title" style="font-size:22px;">Settings</div>
+  <div class="ft-page-sub" style="margin-top:-0.5rem; margin-bottom:1.5rem;">Manage your account profile and app formatting.</div>
+
+  <div class="ft-settings-card">
+    <div class="ft-settings-card-title">Profile Details</div>
+    <div class="ft-settings-row">
+      <div class="ft-settings-field">
+        <label>Full Name</label>
+        <input type="text" id="newUsername" placeholder="Full name">
       </div>
-      <div class="ft-user">
-        <span id="adminname">areeb@123</span>
-        <button class="ft-logout-btn">&#8594; Logout</button>
-      </div>
-    </div>
- 
-    <!-- Stat Cards -->
-    <div class="ft-cards">
-      <div class="ft-card">
-        <div class="ft-card-icon" style="background:#1e3a5f;">&#127970;</div>
-        <div class="ft-card-label">Current Balance</div>
-        <div class="ft-card-value">$0.00</div>
-      </div>
-      <div class="ft-card">
-        <div class="ft-card-icon" style="background:#14532d;">&#128200;</div>
-        <div class="ft-card-label">Total Income</div>
-        <div class="ft-card-value green">$0.00</div>
-      </div>
-      <div class="ft-card">
-        <div class="ft-card-icon" style="background:#4c1d1d;">&#128201;</div>
-        <div class="ft-card-label">Total Expense</div>
-        <div class="ft-card-value red">$0.00</div>
-      </div>
-      <div class="ft-card">
-        <div class="ft-card-icon" style="background:#1e3a5f;">&#128260;</div>
-        <div class="ft-card-label">Total Transactions</div>
-        <div class="ft-card-value">0</div>
-      </div>
-    </div>
- 
-    <!-- Chart + Preferences -->
-    <div class="ft-bottom">
-      <div class="ft-chart-box">
-        <div class="ft-section-title">Cash Flow Analysis</div>
-        <div class="ft-chart-area">Income vs Expenses chart yahan aayega</div>
-      </div>
-      <div class="ft-pref-box">
-        <div class="ft-section-title">Preferences</div>
-        <div class="ft-pref-row">
-          <span>Dark Mode</span>
-          <div class="ft-toggle"></div>
-        </div>
-        <button class="ft-reset-btn">&#128465; Reset All Data</button>
-      </div>
-    </div>
- 
-    <!-- Transactions Table -->
-    <div class="ft-table-box">
-      <div class="ft-section-title">All Transactions</div>
-      <div class="ft-table-filters">
-        <input class="ft-search" type="text" placeholder="&#128269; Search transactions...">
-        <select class="ft-filter-select">
-          <option>All Types</option>
-          <option>Income</option>
-          <option>Expense</option>
+      <div class="ft-settings-field">
+        <label>Primary Currency</label>
+        <select id="currencySelect" class="ft-settings-select">
+          <option value="$">USD ($)</option>
+          <option value="€">EUR (€)</option>
+          <option value="£">GBP (£)</option>
+          <option value="₹">INR (₹)</option>
         </select>
       </div>
-      <table class="ft-table">
-        <thead>
-          <tr>
-            <th>DATE</th>
-            <th>DESCRIPTION</th>
-            <th>CATEGORY</th>
-            <th>AMOUNT</th>
-            <th>ACTIONS</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td colspan="5" style="text-align:center; color:#3b4f70; padding: 2rem;">Koi transaction nahi mili</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
- 
+    <button class="btn ft-settings-btn" id="saveUsername">Save</button>
   </div>
 </div>
+            </div>
+                <div class="ft-main">
+ <div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span id="modalTitle">Add Transaction</span>
+      <button class="modal-close" id="closeModalBtn">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editId">
+      <div class="field">
+        <label>Type</label>
+        <select id="txType" class="modal-select">
+          <option value="expense">Expense</option>
+          <option value="income">Income</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Description</label>
+        <input type="text" id="txDesc" placeholder="e.g. Amazon, Salary, Coffee">
+      </div>
+      <div class="modal-row">
+        <div class="field">
+          <label>Amount</label>
+          <input type="number" id="txAmount" placeholder="">
+        </div>
+        <div class="field">
+          <label>Date</label>
+          <input type="date" id="txDate">
+        </div>
+      </div>
+      <div class="field">
+        <label>Category</label>
+        <select id="txCat" class="modal-select">
+          <option value="" disabled selected>Select a category</option>
+          <option>Salary</option>
+          <option>Food</option>
+          <option>Transport</option>
+          <option>Shopping</option>
+          <option>Bills</option>
+          <option>Health</option>
+          <option>Entertainment</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <button class="btn" id="saveTxBtn">Save Transaction</button>
+    </div>
+  </div>
+</div>
+                    <!-- Topbar -->
+                    <div class="ft-topbar">
+                        <div>
+                            <div class="ft-page-title">Financial Overview</div>
+                            <div class="ft-page-sub">Real-time tracking application</div>
+                        </div>
+                        <div class="ft-user">
+                            <span id="adminname">areeb@123</span>
+                            <button class="ft-logout-btn"> Logout</button>
+                        </div>
+                    </div>
+
+                    <!-- Stat Cards -->
+                    <div class="ft-cards">
+                        <div class="ft-card">
+                            <div class="ft-card-icon" style="background:#1e3a5f;">&#127970;</div>
+                            <div class="ft-card-label">Current Balance</div>
+                            <div class="ft-card-value">$0.00</div>
+                        </div>
+                        <div class="ft-card">
+                            <div class="ft-card-icon" style="background:#14532d;">&#128200;</div>
+                            <div class="ft-card-label">Total Income</div>
+                            <div class="ft-card-value green">$0.00</div>
+                        </div>
+                        <div class="ft-card">
+                            <div class="ft-card-icon" style="background:#4c1d1d;">&#128201;</div>
+                            <div class="ft-card-label">Total Expense</div>
+                            <div class="ft-card-value red">$0.00</div>
+                        </div>
+                        <div class="ft-card">
+                            <div class="ft-card-icon" style="background:#1e3a5f;">&#128260;</div>
+                            <div class="ft-card-label">Total Transactions</div>
+                            <div class="ft-card-value">0</div>
+                        </div>
+                        
+                    </div>
+
+
+                    <!-- Chart + Preferences -->
+                    <div class="ft-bottom">
+                        <div class="ft-chart-box">
+                            <div class="ft-section-title">Cash Flow Analysis</div>
+                            <div class="ft-chart-area">Income vs Expenses chart yahan aayega</div>
+                        </div>
+                        <div class="ft-pref-box">
+                            <div class="ft-section-title">Preferences</div>
+                            <div class="ft-pref-row">
+                                <span>Dark Mode</span>
+                                <div class="ft-toggle"></div>
+                            </div>
+                            <button class="ft-reset-btn">&#128465; Reset All Data</button>
+                        </div>
+                    </div>
+
+                    <!-- Transactions Table -->
+                    <div class="ft-table-box">
+                        <div class="ft-section-title">All Transactions</div>
+                        <div class="ft-table-filters">
+                            <input class="ft-search" type="text" placeholder="&#128269; Search transactions...">
+                            <select class="ft-filter-select">
+                                <option>All Types</option>
+                                <option>Income</option>
+                                <option>Expense</option>
+                            </select>
+                        </div>
+                        <table class="ft-table">
+                            <thead>
+                                <tr>
+                                    <th>DATE</th>
+                                    <th>DESCRIPTION</th>
+                                    <th>CATEGORY</th>
+                                    <th>AMOUNT</th>
+                                    <th>ACTIONS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" style="text-align:center; color:#3b4f70; padding: 2rem;">Koi
+                                        transaction nahi mili</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                    </div>
+
+                </div>
+            </div>
+           
         </div>
     </main>
 
