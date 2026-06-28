@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -22,31 +25,134 @@
                 <div class="form active" id="signinForm">
                     <div class="field">
                         <label>Username</label>
-                        <input type="text" placeholder="Enter username">
+                        <input id="username" type="text" placeholder="Enter username">
                     </div>
                     <div class="field">
                         <label>Password</label>
-                        <input type="password" placeholder="Enter password">
+                        <input id="password" type="password" placeholder="Enter password">
                     </div>
-                    <button class="btn">Sign In</button>
+                    <button id="inbtn" class="btn">Sign In</button>
                 </div>
 
                 <div class="form" id="signupForm">
                     <div class="field">
                         <label>Username</label>
-                        <input type="text" placeholder="Choose a username">
+                        <input id="signupusername" type="text" placeholder="Choose a username">
                     </div>
                     <div class="field">
                         <label>Password</label>
-                        <input type="password" placeholder="Choose a password">
+                        <input id="signuppassword"  type="password" placeholder="Choose a password">
                     </div>
                     <div class="field">
                         <label>Confirm Password</label>
-                        <input type="password" placeholder="Re-enter password">
+                        <input id="signupconfirmpassword"  type="password" placeholder="Re-enter password">
                     </div>
-                    <button class="btn btnsu">Sign Up</button>
+                    <button id="upbtn" class="btn btnsu">Sign Up</button>
                 </div>
             </div>
+        </div>
+        <div class="section">
+            <div class="ft-wrap">
+ 
+  <!-- Sidebar -->
+  <div class="ft-sidebar">
+    <div>
+      <div class="ft-logo-title">&#9632; FinTrack Pro</div>
+      <div class="ft-logo-sub">Enterprise Finance</div>
+    </div>
+    <nav class="ft-nav">
+      <a class="ft-nav-item active">&#9783; Dashboard</a>
+      <a class="ft-nav-item">&#9881; Settings</a>
+    </nav>
+    <button class="ft-add-btn">+ Add Transaction</button>
+  </div>
+ 
+  <!-- Main -->
+  <div class="ft-main">
+ 
+    <!-- Topbar -->
+    <div class="ft-topbar">
+      <div>
+        <div class="ft-page-title">Financial Overview</div>
+        <div class="ft-page-sub">Real-time tracking application</div>
+      </div>
+      <div class="ft-user">
+        <span id="adminname">areeb@123</span>
+        <button class="ft-logout-btn">&#8594; Logout</button>
+      </div>
+    </div>
+ 
+    <!-- Stat Cards -->
+    <div class="ft-cards">
+      <div class="ft-card">
+        <div class="ft-card-icon" style="background:#1e3a5f;">&#127970;</div>
+        <div class="ft-card-label">Current Balance</div>
+        <div class="ft-card-value">$0.00</div>
+      </div>
+      <div class="ft-card">
+        <div class="ft-card-icon" style="background:#14532d;">&#128200;</div>
+        <div class="ft-card-label">Total Income</div>
+        <div class="ft-card-value green">$0.00</div>
+      </div>
+      <div class="ft-card">
+        <div class="ft-card-icon" style="background:#4c1d1d;">&#128201;</div>
+        <div class="ft-card-label">Total Expense</div>
+        <div class="ft-card-value red">$0.00</div>
+      </div>
+      <div class="ft-card">
+        <div class="ft-card-icon" style="background:#1e3a5f;">&#128260;</div>
+        <div class="ft-card-label">Total Transactions</div>
+        <div class="ft-card-value">0</div>
+      </div>
+    </div>
+ 
+    <!-- Chart + Preferences -->
+    <div class="ft-bottom">
+      <div class="ft-chart-box">
+        <div class="ft-section-title">Cash Flow Analysis</div>
+        <div class="ft-chart-area">Income vs Expenses chart yahan aayega</div>
+      </div>
+      <div class="ft-pref-box">
+        <div class="ft-section-title">Preferences</div>
+        <div class="ft-pref-row">
+          <span>Dark Mode</span>
+          <div class="ft-toggle"></div>
+        </div>
+        <button class="ft-reset-btn">&#128465; Reset All Data</button>
+      </div>
+    </div>
+ 
+    <!-- Transactions Table -->
+    <div class="ft-table-box">
+      <div class="ft-section-title">All Transactions</div>
+      <div class="ft-table-filters">
+        <input class="ft-search" type="text" placeholder="&#128269; Search transactions...">
+        <select class="ft-filter-select">
+          <option>All Types</option>
+          <option>Income</option>
+          <option>Expense</option>
+        </select>
+      </div>
+      <table class="ft-table">
+        <thead>
+          <tr>
+            <th>DATE</th>
+            <th>DESCRIPTION</th>
+            <th>CATEGORY</th>
+            <th>AMOUNT</th>
+            <th>ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="5" style="text-align:center; color:#3b4f70; padding: 2rem;">Koi transaction nahi mili</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+ 
+  </div>
+</div>
         </div>
     </main>
 

@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Michroma", sans-serif;
 }
 
 html,
@@ -9,7 +10,8 @@ body {
   width: 100%;
   height: 100%;
   font-family: Arial, sans-serif;
-}
+  background-color: white;
+} 
     .loginsection{
         height: 100vh;
         width: 100%;
@@ -112,4 +114,293 @@ body {
     .btn:active{
         scale: .8;
     }
-    
+    .ft-wrap {
+    display: flex;
+    min-height: 100vh;
+    background-color: #151c2c;
+    color: #e0e6f0;
+    font-family: Arial, sans-serif;
+  }
+ 
+  /* ---- Sidebar ---- */
+  .ft-sidebar {
+    width: 221px;
+    background-color: #1a2236;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    flex-shrink: 0;
+  }
+ 
+  .ft-logo-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+  }
+ 
+  .ft-logo-sub {
+    font-size: 12px;
+    color: #7a8db0;
+    margin-top: 2px;
+  }
+ 
+  .ft-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+ 
+  .ft-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #a0aec0;
+    cursor: pointer;
+    text-decoration: none;
+  }
+ 
+  .ft-nav-item.active {
+    background-color: #2a3a5c;
+    color: #fff;
+  }
+ 
+  .ft-add-btn {
+    margin-top: auto;
+    padding: 10px;
+    background-color: #3b82f6;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+  }
+ 
+  /* ---- Main ---- */
+  .ft-main {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+ 
+  /* ---- Topbar ---- */
+  .ft-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+ 
+  .ft-page-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+  }
+ 
+  .ft-page-sub {
+    font-size: 13px;
+    color: #7a8db0;
+    margin-top: 3px;
+  }
+ 
+  .ft-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: #a0aec0;
+  }
+ 
+  .ft-logout-btn {
+    padding: 7px 14px;
+    border: 1px solid #3b4f70;
+    background: transparent;
+    color: #a0aec0;
+    border-radius: 7px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+ 
+  /* ---- Cards ---- */
+  .ft-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+ 
+  .ft-card {
+    background-color: #1e2a40;
+    border-radius: 10px;
+    padding: 1.2rem;
+  }
+ 
+  .ft-card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 0.8rem;
+  }
+ 
+  .ft-card-label {
+    font-size: 12px;
+    color: #7a8db0;
+    margin-bottom: 4px;
+  }
+ 
+  .ft-card-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+  }
+ 
+  .ft-card-value.green { color: #22c55e; }
+  .ft-card-value.red   { color: #ef4444; }
+ 
+  /* ---- Bottom row ---- */
+  .ft-bottom {
+    display: flex;
+    gap: 1.5rem;
+  }
+ 
+  .ft-chart-box {
+    flex: 1;
+    background-color: #1e2a40;
+    border-radius: 10px;
+    padding: 1.5rem;
+  }
+ 
+  .ft-section-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+ 
+  .ft-chart-area {
+    background-color: #151c2c;
+    border-radius: 8px;
+   height: 304px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3b4f70;
+    font-size: 13px;
+  }
+ 
+  /* ---- Preferences ---- */
+  .ft-pref-box {
+    width: 240px;
+    background-color: #1e2a40;
+    border-radius: 10px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+ 
+  .ft-pref-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #e0e6f0;
+  }
+ 
+  .ft-toggle {
+    width: 40px;
+    height: 22px;
+    background-color: #3b82f6;
+    border-radius: 20px;
+    position: relative;
+  }
+ 
+  .ft-toggle::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border-radius: 50%;
+    top: 3px;
+    right: 3px;
+  }
+ 
+  .ft-reset-btn {
+    width: 100%;
+       margin-top: 12vw;
+
+    padding: 10px;
+    background: transparent;
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+ 
+  /* ---- Transactions ---- */
+  .ft-table-box {
+    background-color: #1e2a40;
+    border-radius: 10px;
+    padding: 1.5rem;
+  }
+ 
+  .ft-table-filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+ 
+  .ft-search {
+    flex: 1;
+    padding: 8px 12px;
+    background-color: #151c2c;
+    border: 1px solid #2a3a5c;
+    border-radius: 8px;
+    color: #a0aec0;
+    font-size: 13px;
+  }
+ 
+  .ft-filter-select {
+    padding: 8px 12px;
+    background-color: #151c2c;
+    border: 1px solid #2a3a5c;
+    border-radius: 8px;
+    color: #a0aec0;
+    font-size: 13px;
+  }
+ 
+  .ft-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+ 
+  .ft-table th {
+    text-align: left;
+    padding: 8px 10px;
+    color: #7a8db0;
+    font-weight: 600;
+    border-bottom: 1px solid #2a3a5c;
+  }
+ 
+  .ft-table td {
+    padding: 10px;
+    color: #a0aec0;
+    border-bottom: 1px solid #1e2a40;
+  }
+  .section{
+    min-height: 100vh;
+    width: 100%;
+    display: none;
+  }
