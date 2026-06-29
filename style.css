@@ -36,8 +36,7 @@ html, body {
   font-family: Arial, sans-serif;
   background-color: var(--body-bg);
 }
-
-/* === LOGIN SECTION === */
+ 
 .loginsection {
   height: 100vh;
   width: 100%;
@@ -139,8 +138,7 @@ input:focus {
 .btn:active {
   scale: .8;
 }
-
-/* === DASHBOARD LAYOUT === */
+ 
 .ft-wrap {
   display: flex;
   min-height: 100vh;
@@ -148,8 +146,7 @@ input:focus {
   color: var(--text-white);
   font-family: Arial, sans-serif;
 }
-
-/* === SIDEBAR === */
+ 
 .ft-sidebar {
   width: 221px;
   background-color: var(--sidebar-bg);
@@ -208,8 +205,7 @@ input:focus {
   cursor: pointer;
   width: 100%;
 }
-
-/* === MAIN === */
+ 
 .ft-main {
     position: relative;
   flex: 1;
@@ -218,8 +214,7 @@ input:focus {
   flex-direction: column;
   gap: 1.5rem;
 }
-
-/* === TOPBAR === */
+ 
 .ft-topbar {
   display: flex;
   justify-content: space-between;
@@ -255,8 +250,7 @@ input:focus {
   font-size: 13px;
   cursor: pointer;
 }
-
-/* === CARDS === */
+ 
 .ft-cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -294,8 +288,7 @@ input:focus {
 
 .ft-card-value.green { color: var(--success); }
 .ft-card-value.red   { color: var(--danger); }
-
-/* === BOTTOM ROW === */
+ 
 .ft-bottom {
   display: flex;
   gap: 1.5rem;
@@ -346,23 +339,17 @@ input:focus {
 }
 
 .ft-toggle {
+  font-size: 1vw;
   width: 40px;
-  height: 22px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: var(--secondary-blue);
   border-radius: 20px;
   position: relative;
 }
 
-.ft-toggle::after {
-  content: '';
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  background: var(--white);
-  border-radius: 50%;
-  top: 3px;
-  right: 3px;
-}
 
 .ft-reset-btn {
   width: 100%;
@@ -375,8 +362,7 @@ input:focus {
   font-size: 13px;
   cursor: pointer;
 }
-
-/* === TABLE === */
+ 
 .ft-table-box {
   background-color: var(--card-bg);
   border-radius: 10px;

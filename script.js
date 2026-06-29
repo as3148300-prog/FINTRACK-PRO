@@ -1,488 +1,329 @@
-// Variables - sabse upar taaki sab functions access kar sakein
-let curbalance = 0;
-let totalincome = 0;
-let totalexpenses = 0;
-let totaltransection = 0;
+let balance = 0;
+let income = 0;
+let expense = 0;
+let transactionCount = 0;
 let chart = null;
+let editingRow = null;
+ 
 
-function signclickfnc() {
-    let signin = document.querySelector("#Sign-in");
-    let signup = document.querySelector("#Sign-up");
+document.querySelector("#Sign-up").addEventListener("click", function () {
+    document.querySelector("#signupForm").style.display = "block";
+    document.querySelector("#signinForm").style.display = "none";
+    document.querySelector(".tab.active").style.borderBottom = "0px solid #4a6cf7";
+    document.querySelector("#Sign-up").style.borderBottom = "2px solid #4a6cf7";
+    document.querySelector(".tab.active").style.color = "#888";
+    document.querySelector("#Sign-up").style.color = "#4a6cf7";
+});
 
-    signup.addEventListener("click", function () {
-        document.querySelector("#signupForm").style.display = "block";
-        document.querySelector("#signinForm").style.display = "none";
-        document.querySelector(".tab.active").style.borderBottom = "0px solid #4a6cf7";
-        document.querySelector("#Sign-up").style.borderBottom = "2px solid #4a6cf7";
-        document.querySelector(".tab.active").style.color = "#888";
-        document.querySelector("#Sign-up").style.color = "#4a6cf7";
-    });
+document.querySelector("#Sign-in").addEventListener("click", function () {
+    document.querySelector("#signupForm").style.display = "none";
+    document.querySelector("#signinForm").style.display = "block";
+    document.querySelector(".tab.active").style.borderBottom = "2px solid #4a6cf7";
+    document.querySelector("#Sign-up").style.borderBottom = "0px solid #4a6cf7";
+    document.querySelector(".tab.active").style.color = "#4a6cf7";
+    document.querySelector("#Sign-up").style.color = "#888";
+});
+ 
 
-    signin.addEventListener("click", function () {
+document.querySelector("#upbtn").addEventListener("click", function () {
+    let name = document.querySelector("#signupusername").value.trim();
+    let pass = document.querySelector("#signuppassword").value.trim();
+    let confirmPass = document.querySelector("#signupconfirmpassword").value.trim();
+
+    if (name === "" && pass === "") {
+        alert("Please enter your username and password");
+    } else if (name === "") {
+        alert("Please enter your username");
+    } else if (pass === "") {
+        alert("Please enter your password");
+    } else if (pass !== confirmPass) {
+        alert("Password and confirm password do not match");
+    } else {
+        localStorage.setItem("username", name);
+        localStorage.setItem("password", pass);
+        alert("Signup Successful");
         document.querySelector("#signupForm").style.display = "none";
         document.querySelector("#signinForm").style.display = "block";
         document.querySelector(".tab.active").style.borderBottom = "2px solid #4a6cf7";
         document.querySelector("#Sign-up").style.borderBottom = "0px solid #4a6cf7";
         document.querySelector(".tab.active").style.color = "#4a6cf7";
         document.querySelector("#Sign-up").style.color = "#888";
-    });
-}
-signclickfnc();
-
-function themetoggle() {
-    const toggle = document.querySelector('.ft-toggle');
-    if (!toggle) return;
-
-    const style = document.createElement('style');
-    style.textContent = `
-        .ft-toggle::after {
-            transition: left 0.3s ease, right 0.3s ease;
-        }
-        .ft-toggle.light::after {
-            right: auto;
-            left: 3px;
-        }
-    `;
-    document.head.appendChild(style);
-
-    toggle.style.cursor = 'pointer';
-    toggle.style.transition = 'all 0.3s ease';
-
-    let isLight = localStorage.getItem('theme') === 'light';
-
-    function applyTheme(light) {
-        const root = document.documentElement;
-        if (light) {
-            root.style.setProperty('--main-bg', '#f0f2f5');
-            root.style.setProperty('--sidebar-bg', '#ffffff');
-            root.style.setProperty('--card-bg', '#ffffff');
-            root.style.setProperty('--active-bg', '#e8edf5');
-            root.style.setProperty('--border-dark', '#d0d7e3');
-            root.style.setProperty('--text-white', '#1a2236');
-            root.style.setProperty('--text-gray', '#4a5568');
-            root.style.setProperty('--text-muted', '#718096');
-            root.style.setProperty('--body-bg', '#f0f2f5');
-            toggle.style.backgroundColor = '#f6c90e';
-            toggle.classList.add('light');
-        } else {
-            root.style.setProperty('--main-bg', '#151c2c');
-            root.style.setProperty('--sidebar-bg', '#1a2236');
-            root.style.setProperty('--card-bg', '#1e2a40');
-            root.style.setProperty('--active-bg', '#2a3a5c');
-            root.style.setProperty('--border-dark', '#3b4f70');
-            root.style.setProperty('--text-white', '#fff');
-            root.style.setProperty('--text-gray', '#a0aec0');
-            root.style.setProperty('--text-muted', '#7a8db0');
-            root.style.setProperty('--body-bg', 'white');
-            toggle.style.backgroundColor = '#3b82f6';
-            toggle.classList.remove('light');
-        }
-        localStorage.setItem('theme', light ? 'light' : 'dark');
     }
+});
+ 
 
-    applyTheme(isLight);
+document.querySelector("#inbtn").addEventListener("click", function () {
+    let name = document.querySelector("#username").value.trim();
+    let pass = document.querySelector("#password").value.trim();
+    let savedName = localStorage.getItem("username");
+    let savedPass = localStorage.getItem("password");
 
-    toggle.addEventListener('click', () => {
-        isLight = !isLight;
-        applyTheme(isLight);
-    });
-}
-
-// ===================== LOCAL STORAGE HELPERS =====================
-
-function saveTransactions() {
-    let transactions = [];
-    document.querySelectorAll(".transections").forEach(function (t) {
-        transactions.push({
-            type: t.dataset.type,
-            date: t.querySelector(".date").textContent.trim(),
-            desc: t.querySelector(".discripttion").textContent.trim(),
-            cat: t.querySelector(".catagory").textContent.trim(),
-            amount: t.querySelector(".amount-value").textContent.trim(),
-        });
-    });
-    localStorage.setItem("transactions", JSON.stringify(transactions));
-    localStorage.setItem("curbalance", curbalance);
-    localStorage.setItem("totalincome", totalincome);
-    localStorage.setItem("totalexpenses", totalexpenses);
-    localStorage.setItem("totaltransection", totaltransection);
-}
-
-function buildTransactionHTML(tx) {
-    if (tx.type === "expense") {
-        return `<div class="transections" data-type="expense">
-            <div class="date">${tx.date}</div>
-            <div class="discripttion">${tx.desc}</div>
-            <div class="catagory">${tx.cat}</div>
-            <div style="color: red;" class="amaount">
-                <span class="currency-symbol">-$</span><span class="amount-value">${tx.amount}</span>
-            </div>
-            <div class="actions">
-                <i class="ri-pencil-fill"></i>
-                <i class="ri-delete-bin-line"></i>
-            </div>
-        </div>`;
+    if (name === "" && pass === "") {
+        alert("Please enter your username and password");
+    } else if (name === "" ) {
+        alert("Please enter your username");
+    } else if (pass === "") {
+        alert("Please enter your password");
+    } else if (name !== savedName && pass !== savedPass) {
+        alert("Username and password both are incorrect");
+    } else if (name !== savedName) {
+        alert("Username is incorrect");
+    } else if (pass !== savedPass) {
+        alert("Password is incorrect");
     } else {
-        return `<div class="transections" data-type="income">
-            <div class="date">${tx.date}</div>
-            <div class="discripttion">${tx.desc}</div>
-            <div class="catagory">${tx.cat}</div>
-            <div style="color: green;" class="amaount">
-                <span class="currency-symbol">+$</span><span class="amount-value">${tx.amount}</span>
-            </div>
-            <div class="actions">
-                <i class="ri-pencil-fill"></i>
-                <i class="ri-delete-bin-line"></i>
-            </div>
-        </div>`;
+        localStorage.setItem("loggedIn", "true");
+        showDashboard();
     }
-}
-
-function loadTransactions() {
-    let saved = localStorage.getItem("transactions");
-    if (!saved) return;
-
-    let transactions = JSON.parse(saved);
-    curbalance = Number(localStorage.getItem("curbalance")) || 0;
-    totalincome = Number(localStorage.getItem("totalincome")) || 0;
-    totalexpenses = Number(localStorage.getItem("totalexpenses")) || 0;
-    totaltransection = Number(localStorage.getItem("totaltransection")) || 0;
-
-    transactions.forEach(function (tx) {
-        document.querySelector(".parenttransection").innerHTML += buildTransactionHTML(tx);
-    });
-
-    document.querySelector(".amount2").textContent = totalexpenses;
-    document.querySelector(".amount3").textContent = totalincome;
-    document.querySelector("#total").textContent = totaltransection;
-    updateBalanceDisplay();
-}
-
-// ===================== END LOCAL STORAGE HELPERS =====================
+});
+ 
 
 function showDashboard() {
     document.querySelector(".loginsection").style.display = "none";
     document.querySelector(".section").style.display = "block";
+
     let username = localStorage.getItem("username");
     document.querySelector("#adminname").textContent = username.toUpperCase();
-    themetoggle();
-    loadTransactions();
+
+    setupTheme();
+    setupChart();
+    loadFromStorage();
 }
+ 
 
-function completeloginpage() {
-    let signinbtn = document.querySelector("#inbtn");
-    let signupbtn = document.querySelector("#upbtn");
-    let nameinp = document.querySelector("#username");
-    let passinp = document.querySelector("#password");
-    let signupusername = document.querySelector("#signupusername");
-    let signuppassword = document.querySelector("#signuppassword");
-    let signupconfirmpassword = document.querySelector("#signupconfirmpassword");
+if (localStorage.getItem("username") && localStorage.getItem("loggedIn") === "true") {
+    showDashboard();
+}
+ 
 
-    if (localStorage.getItem("username") && localStorage.getItem("loggedIn") === "true") {
-        showDashboard();
+function setupTheme() {
+    let toggle = document.querySelector(".ft-toggle");
+    if (!toggle) return;
+
+    let isLight = localStorage.getItem("theme") === "light";
+
+    function applyTheme(light) {
+        let root = document.documentElement;
+        if (light) {
+            root.style.setProperty("--main-bg", "#f0f2f5");
+            root.style.setProperty("--sidebar-bg", "#ffffff");
+            root.style.setProperty("--card-bg", "#ffffff");
+            root.style.setProperty("--active-bg", "#e8edf5");
+            root.style.setProperty("--border-dark", "#d0d7e3");
+            root.style.setProperty("--text-white", "#1a2236");
+            root.style.setProperty("--text-gray", "#4a5568");
+            root.style.setProperty("--text-muted", "#718096");
+            root.style.setProperty("--body-bg", "#f0f2f5");
+            toggle.style.backgroundColor = "#f6c90e";
+            toggle.classList.add("light");
+        } else {
+            root.style.setProperty("--main-bg", "#151c2c");
+            root.style.setProperty("--sidebar-bg", "#1a2236");
+            root.style.setProperty("--card-bg", "#1e2a40");
+            root.style.setProperty("--active-bg", "#2a3a5c");
+            root.style.setProperty("--border-dark", "#3b4f70");
+            root.style.setProperty("--text-white", "#fff");
+            root.style.setProperty("--text-gray", "#a0aec0");
+            root.style.setProperty("--text-muted", "#7a8db0");
+            root.style.setProperty("--body-bg", "white");
+            toggle.style.backgroundColor = "#3b82f6";
+            toggle.classList.remove("light");
+        }
+        localStorage.setItem("theme", light ? "light" : "dark");
     }
 
-    signupbtn.addEventListener("click", function () {
-        if (signupusername.value.trim() === "" && signuppassword.value.trim() === "") {
-            alert("please enter your username and password");
-        } else if (signupusername.value.trim() === "" && signuppassword.value.trim() !== "") {
-            alert("please enter your username");
-        } else if (signupusername.value.trim() !== "" && signuppassword.value.trim() === "") {
-            alert("please enter your password");
-        } else if (signuppassword.value.trim() !== signupconfirmpassword.value.trim()) {
-            alert("your password and confirm password is different");
-        } else {
-            localStorage.setItem("username", signupusername.value.trim());
-            localStorage.setItem("password", signuppassword.value.trim());
-            alert("Signup Successful");
-            document.querySelector("#signupForm").style.display = "none";
-            document.querySelector("#signinForm").style.display = "block";
-            document.querySelector(".tab.active").style.borderBottom = "2px solid #4a6cf7";
-            document.querySelector("#Sign-up").style.borderBottom = "0px solid #4a6cf7";
-            document.querySelector(".tab.active").style.color = "#4a6cf7";
-            document.querySelector("#Sign-up").style.color = "#888";
-        }
-    });
+    applyTheme(isLight);
 
-    signinbtn.addEventListener("click", function () {
-        let savedName = localStorage.getItem("username");
-        let savedPass = localStorage.getItem("password");
-
-        if (nameinp.value.trim() === "" && passinp.value.trim() === "") {
-            alert("enter your username and password");
-        } else if (nameinp.value.trim() !== "" && passinp.value.trim() === "") {
-            alert("enter your password");
-        } else if (nameinp.value.trim() === "" && passinp.value.trim() !== "") {
-            alert("enter your username");
-        } else if (nameinp.value.trim() !== savedName && passinp.value.trim() !== savedPass) {
-            alert("username and password both are incorrect");
-        } else if (nameinp.value.trim() !== savedName) {
-            alert("your username is incorrect");
-        } else if (passinp.value.trim() !== savedPass) {
-            alert("your password is incorrect");
-        } else {
-            localStorage.setItem("loggedIn", "true");
-            showDashboard();
-        }
+    toggle.addEventListener("click", function () {
+        isLight = !isLight;
+        applyTheme(isLight);
     });
 }
-completeloginpage();
+ 
 
-function settingopenandclosefnc() {
-    document.querySelector("#settings").addEventListener("click", function () {
-        document.querySelector(".ft-main").style.display = "none";
-        document.querySelector("#settings").style.backgroundColor = "var(--active-bg)";
-        document.querySelector(".ft-nav-item").style.backgroundColor = "transparent";
-        document.querySelector(".settingsection").style.display = "block";
-    });
-    document.querySelector(".ft-nav-item").addEventListener("click", function () {
-        document.querySelector(".ft-main").style.display = "flex";
-        document.querySelector("#settings").style.backgroundColor = "transparent";
-        document.querySelector(".ft-nav-item").style.backgroundColor = "var(--active-bg)";
-        document.querySelector(".settingsection").style.display = "none";
-    });
-}
-settingopenandclosefnc();
-
-function addtransectionbtn() {
-    document.querySelector(".ft-add-btn").addEventListener("click", function () {
-        document.querySelector(".modal-overlay").style.display = "flex";
-    });
-    document.querySelector(".modal-close").addEventListener("click", function () {
-        document.querySelector(".modal-overlay").style.display = "none";
-    });
-}
-addtransectionbtn();
-
-function logoutbtn() {
-    document.querySelector(".ft-logout-btn").addEventListener("click", function () {
-        document.querySelector(".loginsection").style.display = "flex";
-        document.querySelector(".section").style.display = "none";
-    });
-}
-logoutbtn();
-
-function settingspage() {
-    let changeusername = document.querySelector("#saveUsername");
-    let currencySelect = document.querySelector("#currencySelect");
-
-    changeusername.addEventListener("click", function () {
-        let username = document.querySelector("#newUsername").value.trim();
-
-        if (username === "") {
-            alert("Please select a name");
-            return;
-        }
-
-        document.querySelector("#adminname").textContent = username.toUpperCase();
-
-        document.querySelectorAll(".currency-symbol").forEach(function (symbol) {
-            symbol.textContent = currencySelect.value;
-        });
-
-        alert("Done!!!");
-    });
-}
-settingspage();
-
-// Chart
-const ctx = document.querySelector("#myChart");
-chart = new Chart(ctx, {
-    type: "bar",
-    data: {
-        labels: ["Income", "Expense"],
-        datasets: [{
-            label: "Amount",
-            data: [0, 0],
-            backgroundColor: ["#22C55E", "#EF4444"],
-            borderRadius: 8,
-            borderWidth: 0,
-            barThickness: 150,
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: { display: false },
-            title: {
-                display: true,
-                text: "Income vs Expense",
-            }
+function setupChart() {
+    let ctx = document.querySelector("#myChart");
+    chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ["Income", "Expense"],
+            datasets: [{
+                label: "Amount",
+                data: [0, 0],
+                backgroundColor: ["#22C55E", "#EF4444"],
+                borderRadius: 8,
+                borderWidth: 0,
+                barThickness: 150
+            }]
         },
-        scales: {
-            x: { grid: { display: false } },
-            y: { beginAtZero: true }
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: "Income vs Expense" }
+            },
+            scales: {
+                x: { grid: { display: false } },
+                y: { beginAtZero: true }
+            }
         }
-    }
-});
+    });
+}
+ 
 
-function updateBalanceDisplay() {
-    let currencySymbol = document.querySelector("#currencySelect").value;
-    let balanceSymbolEl = document.querySelector(".ft-cards .ft-card:first-child .currency-symbol");
-    let balanceAmountEl = document.querySelector(".amount");
+function updateDisplay() {
+    let symbol = document.querySelector("#currencySelect").value;
+    let symbolEl = document.querySelector(".ft-cards .ft-card:first-child .currency-symbol");
+    let amountEl = document.querySelector(".amount");
 
-    if (curbalance < 0) {
-        balanceSymbolEl.textContent = "-" + currencySymbol;
-        balanceAmountEl.textContent = Math.abs(curbalance);
+    if (balance < 0) {
+        symbolEl.textContent = "-" + symbol;
+        amountEl.textContent = Math.abs(balance);
     } else {
-        balanceSymbolEl.textContent = currencySymbol;
-        balanceAmountEl.textContent = curbalance;
+        symbolEl.textContent = symbol;
+        amountEl.textContent = balance;
     }
 
     if (chart) {
-        chart.data.datasets[0].data = [totalincome, totalexpenses];
+        chart.data.datasets[0].data = [income, expense];
         chart.update();
     }
+} 
+
+function makeTransactionHTML(type, date, desc, cat, amount) {
+    let color = type === "expense" ? "red" : "green";
+    let sign = type === "expense" ? "-$" : "+$";
+
+    return `<div class="transections" data-type="${type}">
+        <div class="date">${date}</div>
+        <div class="discripttion">${desc}</div>
+        <div class="catagory">${cat}</div>
+        <div style="color: ${color};" class="amaount">
+            <span class="currency-symbol">${sign}</span><span class="amount-value">${amount}</span>
+        </div>
+        <div class="actions">
+            <i class="ri-pencil-fill"></i>
+            <i class="ri-delete-bin-line"></i>
+        </div>
+    </div>`;
 }
+ 
 
-function addition() {
-    let transbtn = document.querySelector("#saveTxBtn");
-    let type = document.querySelector("#txType");
-    let amount = document.querySelector("#txAmount");
-    let dis = document.querySelector("#txDesc");
-    let det = document.querySelector("#txDate");
-    let cat = document.querySelector("#txCat");
-
-    transbtn.addEventListener("click", function () {
-        if (type.value.trim() === "expense") {
-            if (dis.value.trim() === "") {
-                alert("please enter some discription");
-            } else if (amount.value.trim() === "") {
-                alert("please enter your amount");
-            } else if (det.value.trim() === "") {
-                alert("please select a date");
-            } else if (cat.value.trim() === "") {
-                alert("please select a catagory");
-            } else {
-                curbalance -= Number(amount.value);
-                totalexpenses += Number(amount.value);
-                updateBalanceDisplay();
-                document.querySelector(".amount2").textContent = totalexpenses;
-                totaltransection++;
-                document.querySelector("#total").textContent = totaltransection;
-                document.querySelector(".parenttransection").innerHTML += buildTransactionHTML({
-                    type: "expense",
-                    date: det.value,
-                    desc: dis.value,
-                    cat: cat.value,
-                    amount: amount.value
-                });
-                saveTransactions();
-            }
-        } else {
-            if (dis.value.trim() === "") {
-                alert("please enter some discription");
-            } else if (amount.value.trim() === "") {
-                alert("please enter your amount");
-            } else if (det.value.trim() === "") {
-                alert("please select a date");
-            } else if (cat.value.trim() === "") {
-                alert("please select a catagory");
-            } else {
-                curbalance += Number(amount.value);
-                totalincome += Number(amount.value);
-                updateBalanceDisplay();
-                document.querySelector(".amount3").textContent = totalincome;
-                totaltransection++;
-                document.querySelector("#total").textContent = totaltransection;
-                document.querySelector(".parenttransection").innerHTML += buildTransactionHTML({
-                    type: "income",
-                    date: det.value,
-                    desc: dis.value,
-                    cat: cat.value,
-                    amount: amount.value
-                });
-                saveTransactions();
-            }
-        }
-    });
-}
-addition();
-
-function filter() {
-    function filterTransactions() {
-        let search = document.querySelector(".ft-search").value.toLowerCase();
-        let filter = document.querySelector(".ft-filter-select").value.toLowerCase();
-        let transactions = document.querySelectorAll(".transections");
-
-        transactions.forEach(function (t) {
-            let text = t.textContent.toLowerCase();
-            let type = t.dataset.type;
-
-            if (text.includes(search) && (filter === "all types" || type === filter)) {
-                t.style.display = "flex";
-            } else {
-                t.style.display = "none";
-            }
+function saveToStorage() {
+    let rows = [];
+    document.querySelectorAll(".transections").forEach(function (row) {
+        rows.push({
+            type: row.dataset.type,
+            date: row.querySelector(".date").textContent.trim(),
+            desc: row.querySelector(".discripttion").textContent.trim(),
+            cat: row.querySelector(".catagory").textContent.trim(),
+            amount: row.querySelector(".amount-value").textContent.trim()
         });
+    });
+    localStorage.setItem("transactions", JSON.stringify(rows));
+    localStorage.setItem("balance", balance);
+    localStorage.setItem("income", income);
+    localStorage.setItem("expense", expense);
+    localStorage.setItem("transactionCount", transactionCount);
+} 
+
+function loadFromStorage() {
+    let saved = localStorage.getItem("transactions");
+    if (!saved) return;
+
+    let rows = JSON.parse(saved);
+    balance = Number(localStorage.getItem("balance")) || 0;
+    income = Number(localStorage.getItem("income")) || 0;
+    expense = Number(localStorage.getItem("expense")) || 0;
+    transactionCount = Number(localStorage.getItem("transactionCount")) || 0;
+
+    rows.forEach(function (row) {
+        document.querySelector(".parenttransection").innerHTML += makeTransactionHTML(row.type, row.date, row.desc, row.cat, row.amount);
+    });
+
+    document.querySelector(".amount2").textContent = expense;
+    document.querySelector(".amount3").textContent = income;
+    document.querySelector("#total").textContent = transactionCount;
+    updateDisplay();
+}
+ 
+
+document.querySelector("#saveTxBtn").addEventListener("click", function () {
+
+    let type = document.querySelector("#txType").value.trim();
+    let amount = document.querySelector("#txAmount").value.trim();
+    let desc = document.querySelector("#txDesc").value.trim();
+    let date = document.querySelector("#txDate").value.trim();
+    let cat = document.querySelector("#txCat").value.trim();
+
+    if (desc === "") { alert("Please enter a description"); return; }
+    if (amount === "") { alert("Please enter an amount"); return; }
+    if (date === "") { alert("Please select a date"); return; }
+    if (cat === "") { alert("Please select a category"); return; }
+ 
+    if (editingRow) {
+        let newHTML = makeTransactionHTML(type, date, desc, cat, amount);
+        let temp = document.createElement("div");
+        temp.innerHTML = newHTML;
+        editingRow.replaceWith(temp.firstElementChild);
+        editingRow = null;
+    } else { 
+        document.querySelector(".parenttransection").innerHTML += makeTransactionHTML(type, date, desc, cat, amount);
     }
 
-    document.querySelector(".ft-search").addEventListener("input", filterTransactions);
-    document.querySelector(".ft-filter-select").addEventListener("change", filterTransactions);
-}
-filter();
+    if (type === "expense") {
+        balance -= Number(amount);
+        expense += Number(amount);
+        document.querySelector(".amount2").textContent = expense;
+    } else {
+        balance += Number(amount);
+        income += Number(amount);
+        document.querySelector(".amount3").textContent = income;
+    }
 
-function resetbtn() {
-    document.querySelector(".ft-reset-btn").addEventListener("click", function () {
-        curbalance = 0;
-        totalincome = 0;
-        totalexpenses = 0;
-        totaltransection = 0;
+    transactionCount++;
+    document.querySelector("#total").textContent = transactionCount;
+    updateDisplay();
+    saveToStorage();
 
-        document.querySelector(".amount").textContent = "0.00";
-        document.querySelector(".amount2").textContent = "0.00";
-        document.querySelector(".amount3").textContent = "0.00";
-        document.querySelector("#total").textContent = "0";
-        document.querySelector(".parenttransection").innerHTML = "";
+    document.querySelector(".modal-overlay").style.display = "none";
+});
+ 
 
-        chart.data.datasets[0].data = [0, 0];
-        chart.update();
+document.querySelector(".parenttransection").addEventListener("click", function (e) {
+    if (e.target.classList.contains("ri-delete-bin-line")) {
+        let row = e.target.closest(".transections");
+        let type = row.dataset.type;
+        let amount = Number(row.querySelector(".amount-value").textContent);
 
-        localStorage.removeItem("transactions");
-        localStorage.removeItem("curbalance");
-        localStorage.removeItem("totalincome");
-        localStorage.removeItem("totalexpenses");
-        localStorage.removeItem("totaltransection");
-    });
-}
-resetbtn();
-
-function deletefnc() {
-    document.querySelector(".parenttransection").addEventListener("click", function (e) {
-        if (e.target.classList.contains("ri-delete-bin-line")) {
-            let transaction = e.target.closest(".transections");
-            let type = transaction.dataset.type;
-            let amount = Number(transaction.querySelector(".amount-value").textContent);
-
-            if (type === "expense") {
-                curbalance += amount;
-                totalexpenses -= amount;
-                document.querySelector(".amount2").textContent = totalexpenses;
-            } else {
-                curbalance -= amount;
-                totalincome -= amount;
-                document.querySelector(".amount3").textContent = totalincome;
-            }
-
-            totaltransection--;
-            document.querySelector("#total").textContent = totaltransection;
-            transaction.remove();
-            updateBalanceDisplay();
-            saveTransactions();
+        if (type === "expense") {
+            balance += amount;
+            expense -= amount;
+            document.querySelector(".amount2").textContent = expense;
+        } else {
+            balance -= amount;
+            income -= amount;
+            document.querySelector(".amount3").textContent = income;
         }
-    });
-}
-deletefnc();
+
+        transactionCount--;
+        document.querySelector("#total").textContent = transactionCount;
+        row.remove();
+        updateDisplay();
+        saveToStorage();
+    }
+});
+ 
 
 document.querySelector(".parenttransection").addEventListener("click", function (e) {
     if (e.target.classList.contains("ri-pencil-fill")) {
-        let transaction = e.target.closest(".transections");
-        let type = transaction.dataset.type;
-        let amount = transaction.querySelector(".amount-value").textContent;
-        let desc = transaction.querySelector(".discripttion").textContent.trim();
-        let date = transaction.querySelector(".date").textContent.trim();
-        let cat = transaction.querySelector(".catagory").textContent.trim();
+        let row = e.target.closest(".transections");
+
+        let type = row.dataset.type;
+        let amount = row.querySelector(".amount-value").textContent;
+        let desc = row.querySelector(".discripttion").textContent.trim();
+        let date = row.querySelector(".date").textContent.trim();
+        let cat = row.querySelector(".catagory").textContent.trim();
 
         document.querySelector("#txType").value = type;
         document.querySelector("#txDesc").value = desc;
@@ -490,25 +331,118 @@ document.querySelector(".parenttransection").addEventListener("click", function 
         document.querySelector("#txDate").value = date;
         document.querySelector("#txCat").value = cat;
 
-        document.querySelector(".modal-overlay").style.display = "flex";
-
-        let oldType = type;
-        let oldAmount = Number(amount);
-
-        if (oldType === "expense") {
-            curbalance += oldAmount;
-            totalexpenses -= oldAmount;
-            document.querySelector(".amount2").textContent = totalexpenses;
+        editingRow = row;
+ 
+        if (type === "expense") {
+            balance += Number(amount);
+            expense -= Number(amount);
+            document.querySelector(".amount2").textContent = expense;
         } else {
-            curbalance -= oldAmount;
-            totalincome -= oldAmount;
-            document.querySelector(".amount3").textContent = totalincome;
+            balance -= Number(amount);
+            income -= Number(amount);
+            document.querySelector(".amount3").textContent = income;
         }
 
-        totaltransection--;
-        document.querySelector("#total").textContent = totaltransection;
-        transaction.remove();
-        updateBalanceDisplay();
-        saveTransactions();
+        transactionCount--;
+        document.querySelector("#total").textContent = transactionCount;
+        updateDisplay();
+
+        document.querySelector(".modal-overlay").style.display = "flex";
     }
+});
+ 
+
+document.querySelector(".ft-add-btn").addEventListener("click", function () {
+    editingRow = null;
+    document.querySelector(".modal-overlay").style.display = "flex";
+});
+
+document.querySelector(".modal-close").addEventListener("click", function () {
+    editingRow = null;
+    document.querySelector(".modal-overlay").style.display = "none";
+});
+ 
+
+document.querySelector("#settings").addEventListener("click", function () {
+    document.querySelector(".ft-main").style.display = "none";
+    document.querySelector("#settings").style.backgroundColor = "var(--active-bg)";
+    document.querySelector(".ft-nav-item").style.backgroundColor = "transparent";
+    document.querySelector(".settingsection").style.display = "block";
+});
+
+document.querySelector(".ft-nav-item").addEventListener("click", function () {
+    document.querySelector(".ft-main").style.display = "flex";
+    document.querySelector("#settings").style.backgroundColor = "transparent";
+    document.querySelector(".ft-nav-item").style.backgroundColor = "var(--active-bg)";
+    document.querySelector(".settingsection").style.display = "none";
+});
+ 
+
+document.querySelector("#saveUsername").addEventListener("click", function () {
+    let newName = document.querySelector("#newUsername").value.trim();
+    let currency = document.querySelector("#currencySelect").value;
+
+    if (newName === "") {
+        alert("Please enter a name");
+        return;
+    }
+
+    document.querySelector("#adminname").textContent = newName.toUpperCase();
+
+    document.querySelectorAll(".currency-symbol").forEach(function (el) {
+        el.textContent = currency;
+    });
+
+    alert("Done!");
+});
+ 
+
+document.querySelector(".ft-logout-btn").addEventListener("click", function () {
+    document.querySelector(".loginsection").style.display = "flex";
+    document.querySelector(".section").style.display = "none";
+});
+ 
+
+function filterTransactions() {
+    let search = document.querySelector(".ft-search").value.toLowerCase();
+    let filterVal = document.querySelector(".ft-filter-select").value.toLowerCase();
+
+    document.querySelectorAll(".transections").forEach(function (row) {
+        let text = row.textContent.toLowerCase();
+        let type = row.dataset.type;
+
+        if (text.includes(search) && (filterVal === "all types" || type === filterVal)) {
+            row.style.display = "flex";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
+
+document.querySelector(".ft-search").addEventListener("input", filterTransactions);
+document.querySelector(".ft-filter-select").addEventListener("change", filterTransactions);
+ 
+
+document.querySelector(".ft-reset-btn").addEventListener("click", function () {
+    balance = 0;
+    income = 0;
+    expense = 0;
+    transactionCount = 0;
+
+    document.querySelector(".amount").textContent = "0.00";
+    document.querySelector(".amount2").textContent = "0.00";
+    document.querySelector(".amount3").textContent = "0.00";
+    document.querySelector("#total").textContent = "0";
+    document.querySelector(".parenttransection").innerHTML = "";
+
+    if (chart) {
+        chart.data.datasets[0].data = [0, 0];
+        chart.update();
+    }
+
+    localStorage.removeItem("transactions");
+    localStorage.removeItem("balance");
+    localStorage.removeItem("income");
+    localStorage.removeItem("expense");
+    localStorage.removeItem("transactionCount");
 });
