@@ -36,7 +36,8 @@ html, body {
   font-family: Arial, sans-serif;
   background-color: var(--body-bg);
 }
- 
+
+/* ===== LOGIN ===== */
 .loginsection {
   height: 100vh;
   width: 100%;
@@ -125,7 +126,8 @@ input:focus { border-color: var(--primary); }
 }
 .btn:hover { background-color: var(--primary-hover); }
 .btn:active { scale: .8; }
- 
+
+/* ===== APP LAYOUT ===== */
 .ft-wrap {
   display: flex;
   min-height: 100vh;
@@ -134,7 +136,8 @@ input:focus { border-color: var(--primary); }
   font-family: Arial, sans-serif;
   position: relative;
 }
- 
+
+/* ===== SIDEBAR ===== */
 .ft-sidebar {
   width: 221px;
   background-color: var(--sidebar-bg);
@@ -197,7 +200,7 @@ input:focus { border-color: var(--primary); }
   width: 100%;
 }
 
- 
+/* Hamburger button (hidden on desktop) */
 .ft-hamburger {
   display: none;
   position: fixed;
@@ -221,7 +224,8 @@ input:focus { border-color: var(--primary); }
   background: rgba(0,0,0,0.5);
   z-index: 99;
 }
- 
+
+/* ===== MAIN ===== */
 .ft-main {
   position: relative;
   flex: 1;
@@ -231,7 +235,8 @@ input:focus { border-color: var(--primary); }
   gap: 1.5rem;
   min-width: 0;
 }
- 
+
+/* ===== TOPBAR ===== */
 .ft-topbar {
   display: flex;
   justify-content: space-between;
@@ -271,7 +276,8 @@ input:focus { border-color: var(--primary); }
   cursor: pointer;
   white-space: nowrap;
 }
- 
+
+/* ===== CARDS ===== */
 .ft-cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -311,7 +317,8 @@ input:focus { border-color: var(--primary); }
 
 .ft-card-value.green { color: var(--success); }
 .ft-card-value.red   { color: var(--danger); }
- 
+
+/* ===== BOTTOM ROW ===== */
 .ft-bottom {
   display: flex;
   gap: 1.5rem;
@@ -345,7 +352,8 @@ input:focus { border-color: var(--primary); }
   width: 100% !important;
   height: 100% !important;
 }
- 
+
+/* ===== PREFERENCES ===== */
 .ft-pref-box {
   width: 240px;
   flex-shrink: 0;
@@ -389,7 +397,8 @@ input:focus { border-color: var(--primary); }
   font-size: 13px;
   cursor: pointer;
 }
- 
+
+/* ===== TRANSACTIONS TABLE ===== */
 .ft-table-box {
   background-color: var(--card-bg);
   border-radius: 10px;
@@ -453,7 +462,8 @@ input:focus { border-color: var(--primary); }
   position: relative;
   display: none;
 }
- 
+
+/* ===== SETTINGS ===== */
 .settingsection {
   padding: 2rem;
   display: none;
@@ -518,7 +528,8 @@ input:focus { border-color: var(--primary); }
   font-size: 13px;
   margin-top: 0.3rem;
 }
- 
+
+/* ===== MODAL ===== */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -606,47 +617,45 @@ input:focus { border-color: var(--primary); }
 
 .modal-row .field { flex: 1; min-width: 120px; }
 
- 
-.transections {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  border: 1px solid var(--border-dark);
-  padding: 0.8rem 1rem;
-  border-radius: 10px;
-  gap: 0.5rem;
-  flex-wrap: wrap;
+/* ===== TRANSACTION ROWS ===== */
+.parenttransection {
+  /* tbody - no extra styles needed, inherits from ft-table */
 }
 
-.parenttransection {
-  display: flex;
-  flex-direction: column;
-  margin-top: 1rem;
-  gap: 12px;
+.transections td {
+  padding: 12px 10px;
+  color: var(--text-gray);
+  border-bottom: 1px solid var(--active-bg);
+  vertical-align: middle;
+}
+
+.transections:last-child td {
+  border-bottom: none;
+}
+
+.transections:hover td {
+  background-color: rgba(255,255,255,0.03);
 }
 
 .date {
-  width: 100px;
-  flex-shrink: 0;
   font-size: 12px;
   color: var(--text-muted);
+  white-space: nowrap;
 }
 
 .catagory {
-  flex: 1;
-  min-width: 80px;
   font-size: 13px;
 }
 
 .discripttion {
-  flex: 2;
-  min-width: 100px;
   font-size: 13px;
   word-break: break-word;
 }
 
 .amaount {
-  width: 100px;
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
   flex-shrink: 0;
   font-weight: 600;
   font-size: 14px;
@@ -658,16 +667,22 @@ input:focus { border-color: var(--primary); }
   flex-shrink: 0;
 }
 
+.actions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
 .actions i {
   font-size: 1.1rem;
   cursor: pointer;
 }
 
-.ri-delete-bin-line { color: red; }
+.ri-delete-bin-line { color: #ef4444; }
 
- 
+/* ===== RESPONSIVE BREAKPOINTS ===== */
 
- 
+/* Tablet: 1024px */
 @media (max-width: 1024px) {
   .ft-cards {
     grid-template-columns: repeat(2, 1fr);
@@ -682,14 +697,14 @@ input:focus { border-color: var(--primary); }
   }
 }
 
- 
+/* Tablet/Mobile: 768px */
 @media (max-width: 768px) {
   /* Hamburger visible */
   .ft-hamburger {
     display: block;
   }
 
-   
+  /* Sidebar hidden off-screen, slides in */
   .ft-sidebar {
     position: fixed;
     top: 0;
@@ -763,19 +778,20 @@ input:focus { border-color: var(--primary); }
     font-size: 15px;
   }
 
-  .transections {
+  .ft-table {
+    min-width: 420px;
+  }
+
+  .transections td {
+    padding: 10px 8px;
     font-size: 12px;
-    padding: 0.7rem 0.8rem;
-    gap: 0.4rem;
   }
 
   .date {
-    width: 80px;
     font-size: 11px;
   }
 
   .amaount {
-    width: auto;
     font-size: 12px;
   }
 
@@ -792,7 +808,8 @@ input:focus { border-color: var(--primary); }
     padding: 1.2rem;
   }
 }
- 
+
+/* Small Mobile: 480px */
 @media (max-width: 480px) {
   .ft-cards {
     grid-template-columns: 1fr 1fr;
@@ -843,23 +860,19 @@ input:focus { border-color: var(--primary); }
     font-size: 11px;
   }
 
-   
-  .transections {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "date amount"
-      "desc desc"
-      "cat actions";
-    padding: 0.8rem;
-    gap: 0.3rem 0.5rem;
+  /* Transactions: scroll horizontally on very small screens */
+  .ft-table-box {
+    overflow-x: auto;
   }
 
-  .date { grid-area: date; width: auto; }
-  .discripttion { grid-area: desc; }
-  .catagory { grid-area: cat; }
-  .amaount { grid-area: amount; text-align: right; }
-  .actions { grid-area: actions; justify-content: flex-end; align-items: center; }
+  .ft-table {
+    min-width: 380px;
+  }
+
+  .transections td {
+    padding: 8px 6px;
+    font-size: 11px;
+  }
 
   .ft-table-filters {
     flex-direction: column;

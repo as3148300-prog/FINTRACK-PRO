@@ -4,7 +4,7 @@ let expense = 0;
 let transactionCount = 0;
 let chart = null;
 let editingRow = null;
- 
+
 document.querySelector("#hamburgerBtn").addEventListener("click", function () {
     document.querySelector("#ftSidebar").classList.toggle("open");
     document.querySelector("#sidebarOverlay").classList.toggle("open");
@@ -19,7 +19,7 @@ function closeSidebar() {
     document.querySelector("#ftSidebar").classList.remove("open");
     document.querySelector("#sidebarOverlay").classList.remove("open");
 }
- 
+
 document.querySelector("#Sign-up").addEventListener("click", function () {
     document.querySelector("#signupForm").style.display = "block";
     document.querySelector("#signinForm").style.display = "none";
@@ -37,7 +37,7 @@ document.querySelector("#Sign-in").addEventListener("click", function () {
     document.querySelector(".tab.active").style.color = "#4a6cf7";
     document.querySelector("#Sign-up").style.color = "#888";
 });
- 
+
 document.querySelector("#upbtn").addEventListener("click", function () {
     let name = document.querySelector("#signupusername").value.trim();
     let pass = document.querySelector("#signuppassword").value.trim();
@@ -63,7 +63,7 @@ document.querySelector("#upbtn").addEventListener("click", function () {
         document.querySelector("#Sign-up").style.color = "#888";
     }
 });
- 
+
 document.querySelector("#inbtn").addEventListener("click", function () {
     let name = document.querySelector("#username").value.trim();
     let pass = document.querySelector("#password").value.trim();
@@ -86,7 +86,8 @@ document.querySelector("#inbtn").addEventListener("click", function () {
         localStorage.setItem("loggedIn", "true");
         showDashboard();
     }
-}); 
+});
+
 function showDashboard() {
     document.querySelector(".loginsection").style.display = "none";
     document.querySelector(".section").style.display = "block";
@@ -102,7 +103,7 @@ function showDashboard() {
 if (localStorage.getItem("username") && localStorage.getItem("loggedIn") === "true") {
     showDashboard();
 }
- 
+
 function setupTheme() {
     let toggle = document.querySelector(".ft-toggle");
     if (!toggle) return;
@@ -146,7 +147,7 @@ function setupTheme() {
         applyTheme(isLight);
     });
 }
- 
+
 function setupChart() {
     let ctx = document.querySelector("#myChart");
     chart = new Chart(ctx, {
@@ -183,7 +184,7 @@ function setupChart() {
         }
     });
 }
- 
+
 function updateDisplay() {
     let symbol = document.querySelector("#currencySelect").value;
     let symbolEl = document.querySelector(".ft-cards .ft-card:first-child .currency-symbol");
@@ -202,26 +203,26 @@ function updateDisplay() {
         chart.update();
     }
 }
- 
-function makeTransactionHTML(type, date, desc, cat, amount) {
-    let color = type === "expense" ? "red" : "green";
-    let sign = type === "expense" ? "-" : "+";
-    let symbol = document.querySelector("#currencySelect") ? document.querySelector("#currencySelect").value : "$";
 
-    return `<div class="transections" data-type="${type}">
-        <div class="date">${date}</div>
-        <div class="discripttion">${desc}</div>
-        <div class="catagory">${cat}</div>
-        <div style="color: ${color};" class="amaount">
+function makeTransactionHTML(type, date, desc, cat, amount) {
+    let color = type === "expense" ? "#ef4444" : "#22c55e";
+    let sign = type === "expense" ? "-" : "+";
+    let symbol = document.querySelector("#currencySelect").value;
+
+    return `<tr class="transections" data-type="${type}">
+        <td class="date">${date}</td>
+        <td class="discripttion">${desc}</td>
+        <td class="catagory">${cat}</td>
+        <td class="amaount" style="color:${color};">
             <span class="currency-symbol">${sign}${symbol}</span><span class="amount-value">${Number(amount).toFixed(2)}</span>
-        </div>
-        <div class="actions">
+        </td>
+        <td class="actions">
             <i class="ri-pencil-fill"></i>
             <i class="ri-delete-bin-line"></i>
-        </div>
-    </div>`;
+        </td>
+    </tr>`;
 }
- 
+
 function saveToStorage() {
     let rows = [];
     document.querySelectorAll(".transections").forEach(function (row) {
@@ -239,7 +240,7 @@ function saveToStorage() {
     localStorage.setItem("expense", expense);
     localStorage.setItem("transactionCount", transactionCount);
 }
- 
+
 function loadFromStorage() {
     let saved = localStorage.getItem("transactions");
     if (!saved) return;
@@ -251,7 +252,7 @@ function loadFromStorage() {
     transactionCount = Number(localStorage.getItem("transactionCount")) || 0;
 
     rows.forEach(function (row) {
-        document.querySelector(".parenttransection").innerHTML += makeTransactionHTML(row.type, row.date, row.desc, row.cat, row.amount);
+        document.querySelector(".parenttransection").insertAdjacentHTML("beforeend", makeTransactionHTML(row.type, row.date, row.desc, row.cat, row.amount));
     });
 
     document.querySelector(".amount2").textContent = Number(expense).toFixed(2);
@@ -259,7 +260,7 @@ function loadFromStorage() {
     document.querySelector("#total").textContent = transactionCount;
     updateDisplay();
 }
- 
+
 document.querySelector("#saveTxBtn").addEventListener("click", function () {
     let type = document.querySelector("#txType").value.trim();
     let amount = document.querySelector("#txAmount").value.trim();
@@ -274,12 +275,12 @@ document.querySelector("#saveTxBtn").addEventListener("click", function () {
 
     if (editingRow) {
         let newHTML = makeTransactionHTML(type, date, desc, cat, amount);
-        let temp = document.createElement("div");
+        let temp = document.createElement("tbody");
         temp.innerHTML = newHTML;
         editingRow.replaceWith(temp.firstElementChild);
         editingRow = null;
     } else {
-        document.querySelector(".parenttransection").innerHTML += makeTransactionHTML(type, date, desc, cat, amount);
+        document.querySelector(".parenttransection").insertAdjacentHTML("beforeend", makeTransactionHTML(type, date, desc, cat, amount));
     }
 
     if (type === "expense") {
@@ -299,7 +300,7 @@ document.querySelector("#saveTxBtn").addEventListener("click", function () {
 
     document.querySelector(".modal-overlay").style.display = "none";
 });
- 
+
 document.querySelector(".parenttransection").addEventListener("click", function (e) {
     if (e.target.classList.contains("ri-delete-bin-line")) {
         let row = e.target.closest(".transections");
@@ -323,7 +324,7 @@ document.querySelector(".parenttransection").addEventListener("click", function 
         saveToStorage();
     }
 });
- 
+
 document.querySelector(".parenttransection").addEventListener("click", function (e) {
     if (e.target.classList.contains("ri-pencil-fill")) {
         let row = e.target.closest(".transections");
@@ -359,7 +360,7 @@ document.querySelector(".parenttransection").addEventListener("click", function 
         document.querySelector(".modal-overlay").style.display = "flex";
     }
 });
- 
+
 document.querySelector(".ft-add-btn").addEventListener("click", function () {
     editingRow = null;
     document.querySelector(".modal-overlay").style.display = "flex";
@@ -370,7 +371,7 @@ document.querySelector(".modal-close").addEventListener("click", function () {
     editingRow = null;
     document.querySelector(".modal-overlay").style.display = "none";
 });
- 
+
 document.querySelector("#settings").addEventListener("click", function () {
     document.querySelector(".ft-main").style.display = "none";
     document.querySelector("#settings").style.backgroundColor = "var(--active-bg)";
@@ -386,7 +387,7 @@ document.querySelector(".ft-nav-item").addEventListener("click", function () {
     document.querySelector(".settingsection").style.display = "none";
     closeSidebar();
 });
- 
+
 document.querySelector("#saveUsername").addEventListener("click", function () {
     let newName = document.querySelector("#newUsername").value.trim();
     let currency = document.querySelector("#currencySelect").value;
@@ -400,7 +401,6 @@ document.querySelector("#saveUsername").addEventListener("click", function () {
 
     document.querySelectorAll(".currency-symbol").forEach(function (el) {
         let text = el.textContent;
-        // preserve sign (+ or -)
         if (text.startsWith("+") || text.startsWith("-")) {
             el.textContent = text[0] + currency;
         } else {
@@ -410,12 +410,12 @@ document.querySelector("#saveUsername").addEventListener("click", function () {
 
     alert("Done!");
 });
- 
+
 document.querySelector(".ft-logout-btn").addEventListener("click", function () {
     document.querySelector(".loginsection").style.display = "flex";
     document.querySelector(".section").style.display = "none";
 });
- 
+
 function filterTransactions() {
     let search = document.querySelector(".ft-search").value.toLowerCase();
     let filterVal = document.querySelector(".ft-filter-select").value.toLowerCase();
@@ -434,7 +434,7 @@ function filterTransactions() {
 
 document.querySelector(".ft-search").addEventListener("input", filterTransactions);
 document.querySelector(".ft-filter-select").addEventListener("change", filterTransactions);
- 
+
 document.querySelector(".ft-reset-btn").addEventListener("click", function () {
     balance = 0;
     income = 0;
