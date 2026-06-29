@@ -205,12 +205,15 @@ function settingspage() {
         alert("Done!!!");
     });
 }
-settingspage(); 
-function updateBalanceDisplay() {
-    let curbalance = 0
+settingspage();
+
+let curbalance = 0
 let totalincome = 0
 let totalexpenses = 0
 let totaltransection = 0
+
+function updateBalanceDisplay() {
+    
     let currencySymbol = document.querySelector("#currencySelect").value;
     let balanceSymbolEl = document.querySelector(".ft-cards .ft-card:first-child .currency-symbol");
     let balanceAmountEl = document.querySelector(".amount");
@@ -222,8 +225,9 @@ let totaltransection = 0
         balanceSymbolEl.textContent = currencySymbol;
         balanceAmountEl.textContent = curbalance;
     }
-} 
- function transectionaddition(){
+}
+
+ function addition (){
     let transbtn = document.querySelector("#saveTxBtn")
 let type = document.querySelector("#txType")
 let amount = document.querySelector("#txAmount")
@@ -249,7 +253,7 @@ transbtn.addEventListener("click", function () {
             document.querySelector(".amount2").textContent = totalexpenses
             totaltransection++;
             document.querySelector("#total").textContent = totaltransection;
-            document.querySelector(".parenttransection").innerHTML += `<div class="transections">
+          document.querySelector(".parenttransection").innerHTML += `<div class="transections" data-type="expense">
                                 <div class="date">${det.value}</div>
                                 <div class="discripttion">${dis.value}</div>
                                 <div class="catagory">${cat.value}</div>
@@ -279,7 +283,7 @@ transbtn.addEventListener("click", function () {
             document.querySelector(".amount3").textContent = totalincome
             totaltransection++;
             document.querySelector("#total").textContent = totaltransection;
-             document.querySelector(".parenttransection").innerHTML += `<div class="transections">
+             document.querySelector(".parenttransection").innerHTML += `<div class="transections" data-type="income">
                                 <div class="date">${det.value}</div>
                                 <div class="discripttion">${dis.value}</div>
                                 <div class="catagory">${cat.value}</div>
@@ -297,4 +301,33 @@ transbtn.addEventListener("click", function () {
     }
 })
  }
- transectionaddition()
+ addition()
+
+
+ function filter(){
+    function filterTransactions() {
+    let search = document.querySelector(".ft-search").value.toLowerCase();
+    let filter = document.querySelector(".ft-filter-select").value.toLowerCase();
+    let transactions = document.querySelectorAll(".transections");
+
+    transactions.forEach(function (t) {
+        let text = t.textContent.toLowerCase();
+        let type = t.dataset.type;
+
+        if (text.includes(search) && (filter === "all types" || type === filter)) {
+            t.style.display = "flex";
+        } else {
+            t.style.display = "none";
+        }
+    });
+}
+
+document.querySelector(".ft-search").addEventListener("input", filterTransactions);
+document.querySelector(".ft-filter-select").addEventListener("change", filterTransactions);
+
+
+ }
+
+ filter()
+
+ 
