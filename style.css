@@ -584,3 +584,37 @@ input:focus {
 }
 
 .modal-row .field { flex: 1; }
+
+.transections{
+ 
+  padding-top:1vw ;
+font-size: 15px;
+display: flex;
+  
+}
+.date{
+  width: 14%;
+}
+.catagory{
+  width: 23%;
+ 
+}
+.discripttion{
+   width: 26%; 
+}
+.amaount{
+  width: 19%;
+  color: green;
+ 
+}
+.actions i{
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.actions{
+  display: flex;
+  gap: 20px;
+}
+.ri-delete-bin-line{
+  color: red;
+} 

@@ -151,41 +151,121 @@ function completeloginpage() {
     });
 
     // LOGOUT
-   
+
 }
 completeloginpage();
 
- function settingopenandclosefnc(){
-    document.querySelector("#settings").addEventListener("click",function(){
-     document.querySelector(".ft-main").style.display = "none"
-     document.querySelector("#settings").style.backgroundColor = "var(--active-bg)"
-      document.querySelector(".ft-nav-item").style.backgroundColor = "transparent"
-      document.querySelector(".settingsection").style.display = "block"
-})
-document.querySelector(".ft-nav-item").addEventListener("click",function(){
-     document.querySelector(".ft-main").style.display = "flex"
- document.querySelector("#settings").style.backgroundColor = "transparent"
-      document.querySelector(".ft-nav-item").style.backgroundColor = "var(--active-bg)"
-      document.querySelector(".settingsection").style.display = "none"
-     
-})
- }
- settingopenandclosefnc()
+function settingopenandclosefnc() {
+    document.querySelector("#settings").addEventListener("click", function () {
+        document.querySelector(".ft-main").style.display = "none"
+        document.querySelector("#settings").style.backgroundColor = "var(--active-bg)"
+        document.querySelector(".ft-nav-item").style.backgroundColor = "transparent"
+        document.querySelector(".settingsection").style.display = "block"
+    })
+    document.querySelector(".ft-nav-item").addEventListener("click", function () {
+        document.querySelector(".ft-main").style.display = "flex"
+        document.querySelector("#settings").style.backgroundColor = "transparent"
+        document.querySelector(".ft-nav-item").style.backgroundColor = "var(--active-bg)"
+        document.querySelector(".settingsection").style.display = "none"
 
-function addtransectionbtn(){
-     document.querySelector(".ft-add-btn").addEventListener("click",function(){
-    document.querySelector(".modal-overlay").style.display = "flex"
- })
+    })
+}
+settingopenandclosefnc()
 
- document.querySelector(".modal-close").addEventListener("click",function(){
-    document.querySelector(".modal-overlay").style.display = "none"
- })
+function addtransectionbtn() {
+    document.querySelector(".ft-add-btn").addEventListener("click", function () {
+        document.querySelector(".modal-overlay").style.display = "flex"
+    })
 
- 
+    document.querySelector(".modal-close").addEventListener("click", function () {
+        document.querySelector(".modal-overlay").style.display = "none"
+    })
+
+
 }
 addtransectionbtn()
 
-document.querySelector(".ft-logout-btn").addEventListener("click",function(){
-    document.querySelector(".loginsection").style.display = "flex"
-    document.querySelector(".section").style.display = "none"
+function logoutbtn() {
+    document.querySelector(".ft-logout-btn").addEventListener("click", function () {
+        document.querySelector(".loginsection").style.display = "flex"
+        document.querySelector(".section").style.display = "none"
+    })
+
+}
+logoutbtn()
+
+let curbalance = 0
+let totalincome = 0
+let totalexpenses = 0
+let totaltransection = 0
+
+let transbtn = document.querySelector("#saveTxBtn")
+let type = document.querySelector("#txType")
+let amount = document.querySelector("#txAmount")
+transbtn.addEventListener("click", function () {
+     if(type.value.trim()=== "expense"){
+        if (document.querySelector("#txDesc").value.trim() === "") {
+        alert("please enter some discription")
+    } else if (amount.value.trim() === "") {
+        alert("please enter your amount")
+    } else if (document.querySelector("#txDate").value.trim() === "") {
+        alert("please select a date ")
+    } else if (document.querySelector("#txCat").value.trim() === "") {
+        alert("please select a catagory")
+    } else {
+        curbalance -= amount.value
+        totalexpenses += Number(amount.value)
+        document.querySelector(".amount").textContent = curbalance
+        document.querySelector(".amount2").textContent = totalexpenses 
+        totaltransection++; 
+        document.querySelector("#total").textContent = totaltransection;
+    }
+     }else{
+          if (document.querySelector("#txDesc").value.trim() === "") {
+        alert("please enter some discription")
+    } else if (amount.value.trim() === "") {
+        alert("please enter your amount")
+    } else if (document.querySelector("#txDate").value.trim() === "") {
+        alert("please select a date ")
+    } else if (document.querySelector("#txCat").value.trim() === "") {
+        alert("please select a catagory")
+    } else{
+          curbalance += Number(amount.value)
+          totalincome += Number(amount.value)
+        document.querySelector(".amount").textContent = curbalance 
+          document.querySelector(".amount3").textContent = totalincome
+           totaltransection++; 
+        document.querySelector("#total").textContent = totaltransection;
+    }
+     }
 })
+
+
+
+
+
+
+
+
+
+function settingspage(){
+    let changeusername = document.querySelector("#saveUsername")
+
+changeusername.addEventListener("click",function(){ 
+  document.querySelector("#adminname").textContent = document.querySelector("#newUsername").value.trim().toUpperCase()
+
+  let currencySelect = document.querySelector("#currencySelect");
+
+currencySelect.addEventListener("change", function () {
+    let symbols = document.querySelectorAll(".currency-symbol");
+
+    symbols.forEach(function (symbol) {
+        symbol.textContent = currencySelect.value;
+    });
+});
+    
+})
+
+ }
+
+settingspage()
