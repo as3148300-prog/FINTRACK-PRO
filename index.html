@@ -53,7 +53,7 @@
             </div>
         </div>
         <div class="section">
-            
+
             <div class="ft-wrap">
 
                 <!-- Sidebar -->
@@ -66,86 +66,87 @@
                     </div>
                     <nav class="ft-nav">
                         <a class="ft-nav-item active">&#9783; Dashboard</a>
-                        <a id="settings" class="ft-nav-item"  >&#9881; Settings</a>
+                        <a id="settings" class="ft-nav-item">&#9881; Settings</a>
                     </nav>
                     <button class="ft-add-btn">+ Add Transaction</button>
                 </div>
 
                 <!-- Main -->
-                   <div class="settingsection">
-                <div class="ft-settings-box">
-  <div class="ft-section-title" style="font-size:22px;">Settings</div>
-  <div class="ft-page-sub" style="margin-top:-0.5rem; margin-bottom:1.5rem;">Manage your account profile and app formatting.</div>
+                <div class="settingsection">
+                    <div class="ft-settings-box">
+                        <div class="ft-section-title" style="font-size:22px;">Settings</div>
+                        <div class="ft-page-sub" style="margin-top:-0.5rem; margin-bottom:1.5rem;">Manage your account
+                            profile and app formatting.</div>
 
-  <div class="ft-settings-card">
-    <div class="ft-settings-card-title">Profile Details</div>
-    <div class="ft-settings-row">
-      <div class="ft-settings-field">
-        <label>Full Name</label>
-        <input type="text" id="newUsername" placeholder="Full name">
-      </div>
-      <div class="ft-settings-field">
-        <label>Primary Currency</label>
-        <select id="currencySelect" class="ft-settings-select">
-          <option value="$">USD ($)</option>
-          <option value="€">EUR (€)</option>
-          <option value="£">GBP (£)</option>
-          <option value="₹">INR (₹)</option>
-        </select>
-      </div>
-    </div>
-    <button class="btn ft-settings-btn" id="saveUsername">Save</button>
-  </div>
-</div>
-            </div>
+                        <div class="ft-settings-card">
+                            <div class="ft-settings-card-title">Profile Details</div>
+                            <div class="ft-settings-row">
+                                <div class="ft-settings-field">
+                                    <label>Full Name</label>
+                                    <input type="text" id="newUsername" placeholder="Full name">
+                                </div>
+                                <div class="ft-settings-field">
+                                    <label>Primary Currency</label>
+                                    <select id="currencySelect" class="ft-settings-select">
+                                        <option value="$">USD ($)</option>
+                                        <option value="€">EUR (€)</option>
+                                        <option value="£">GBP (£)</option>
+                                        <option value="₹">INR (₹)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn ft-settings-btn" id="saveUsername">Save</button>
+                        </div>
+                    </div>
+                </div>
                 <div class="ft-main">
- <div class="modal-overlay" id="modalOverlay">
-  <div class="modal-box">
-    <div class="modal-header">
-      <span id="modalTitle">Add Transaction</span>
-      <button class="modal-close" id="closeModalBtn">×</button>
-    </div>
-    <div class="modal-body">
-      <input type="hidden" id="editId">
-      <div class="field">
-        <label>Type</label>
-        <select id="txType" class="modal-select">
-          <option value="expense">Expense</option>
-          <option value="income">Income</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Description</label>
-        <input type="text" id="txDesc" placeholder="e.g. Amazon, Salary, Coffee">
-      </div>
-      <div class="modal-row">
-        <div class="field">
-          <label>Amount</label>
-          <input type="number" id="txAmount" placeholder="">
-        </div>
-        <div class="field">
-          <label>Date</label>
-          <input type="date" id="txDate">
-        </div>
-      </div>
-      <div class="field">
-        <label>Category</label>
-        <select id="txCat" class="modal-select">
-          <option value="" disabled selected>Select a category</option>
-          <option>Salary</option>
-          <option>Food</option>
-          <option>Transport</option>
-          <option>Shopping</option>
-          <option>Bills</option>
-          <option>Health</option>
-          <option>Entertainment</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <button class="btn" id="saveTxBtn">Save Transaction</button>
-    </div>
-  </div>
-</div>
+                    <div class="modal-overlay" id="modalOverlay">
+                        <div class="modal-box">
+                            <div class="modal-header">
+                                <span id="modalTitle">Add Transaction</span>
+                                <button class="modal-close" id="closeModalBtn">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" id="editId">
+                                <div class="field">
+                                    <label>Type</label>
+                                    <select id="txType" class="modal-select">
+                                        <option value="expense">Expense</option>
+                                        <option value="income">Income</option>
+                                    </select>
+                                </div>
+                                <div class="field">
+                                    <label>Description</label>
+                                    <input type="text" id="txDesc" placeholder="e.g. Amazon, Salary, Coffee">
+                                </div>
+                                <div class="modal-row">
+                                    <div class="field">
+                                        <label>Amount</label>
+                                        <input type="number" id="txAmount" placeholder="">
+                                    </div>
+                                    <div class="field">
+                                        <label>Date</label>
+                                        <input type="date" id="txDate">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label>Category</label>
+                                    <select id="txCat" class="modal-select">
+                                        <option value="" disabled selected>Select a category</option>
+                                        <option>Salary</option>
+                                        <option>Food</option>
+                                        <option>Transport</option>
+                                        <option>Shopping</option>
+                                        <option>Bills</option>
+                                        <option>Health</option>
+                                        <option>Entertainment</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                                <button class="btn" id="saveTxBtn">Save Transaction</button>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Topbar -->
                     <div class="ft-topbar">
                         <div>
@@ -163,30 +164,31 @@
                         <div class="ft-card">
                             <div class="ft-card-icon" style="background:#1e3a5f;">&#127970;</div>
                             <div class="ft-card-label">Current Balance</div>
-                          <div class="ft-card-value">
-    <span class="currency-symbol">$</span><span class="amount">0.00</span>
+                           <div class="ft-card-value">
+    <span class="currency-symbol">$</span>
+    <span class="amount">0.00</span>
 </div>
                         </div>
                         <div class="ft-card">
                             <div class="ft-card-icon" style="background:#14532d;">&#128200;</div>
                             <div class="ft-card-label">Total Income</div>
-                          <div class="ft-card-value green">
-    <span class="currency-symbol">$</span><span class="amount3">0.00</span>
-</div>
+                            <div class="ft-card-value green">
+                                <span class="currency-symbol">$</span><span class="amount3">0.00</span>
+                            </div>
                         </div>
                         <div class="ft-card">
                             <div class="ft-card-icon" style="background:#4c1d1d;">&#128201;</div>
                             <div class="ft-card-label">Total Expense</div>
-                          <div id="amount1" class="ft-card-value red">
-    <span class="currency-symbol">$</span><span class="amount2">0.00</span>
-</div>
+                            <div id="amount1" class="ft-card-value red">
+                                <span class="currency-symbol">$</span><span class="amount2">0.00</span>
+                            </div>
                         </div>
                         <div class="ft-card">
                             <div class="ft-card-icon" style="background:#1e3a5f;">&#128260;</div>
                             <div class="ft-card-label">Total Transactions</div>
                             <div id="total" class="ft-card-value">0</div>
                         </div>
-                        
+
                     </div>
 
 
@@ -234,28 +236,14 @@
                                 </tr> -->
                             </tbody>
                         </table>
-                        <div class="transections">
-                          <div class="date">2026-11-12
-                          </div>
-                         <div class="discripttion">
-                            Lorem ipsum dolor sit amet.
-                         </div>
-                         <div class="catagory">
-                            date
-                         </div>
-                         <div class="amaount">
-    <span class="currency-symbol">$</span><span class="amount-value">23255</span>
-</div>
-                        <div class="actions">
-                            <i class="ri-pencil-fill"></i>
-                            <i class="ri-delete-bin-line"></i>
-                        </div>
-                    </div>
+                        <div class="parenttransection">
 
+                        </div>
+
+                    </div>
                 </div>
+
             </div>
-           
-        </div>
     </main>
 
     <script src="script.js"></script>

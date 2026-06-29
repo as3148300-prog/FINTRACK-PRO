@@ -99,12 +99,10 @@ function completeloginpage() {
     let signuppassword = document.querySelector("#signuppassword");
     let signupconfirmpassword = document.querySelector("#signupconfirmpassword");
 
-    // Page load par check
     if (localStorage.getItem("username") && localStorage.getItem("loggedIn") === "true") {
         showDashboard();
     }
 
-    // SIGN UP
     signupbtn.addEventListener("click", function () {
         if (signupusername.value.trim() === "" && signuppassword.value.trim() === "") {
             alert("please enter your username and password");
@@ -127,7 +125,6 @@ function completeloginpage() {
         }
     });
 
-    // SIGN IN
     signinbtn.addEventListener("click", function () {
         let savedName = localStorage.getItem("username");
         let savedPass = localStorage.getItem("password");
@@ -149,9 +146,6 @@ function completeloginpage() {
             showDashboard();
         }
     });
-
-    // LOGOUT
-
 }
 completeloginpage();
 
@@ -167,7 +161,6 @@ function settingopenandclosefnc() {
         document.querySelector("#settings").style.backgroundColor = "transparent"
         document.querySelector(".ft-nav-item").style.backgroundColor = "var(--active-bg)"
         document.querySelector(".settingsection").style.display = "none"
-
     })
 }
 settingopenandclosefnc()
@@ -180,8 +173,6 @@ function addtransectionbtn() {
     document.querySelector(".modal-close").addEventListener("click", function () {
         document.querySelector(".modal-overlay").style.display = "none"
     })
-
-
 }
 addtransectionbtn()
 
@@ -190,69 +181,14 @@ function logoutbtn() {
         document.querySelector(".loginsection").style.display = "flex"
         document.querySelector(".section").style.display = "none"
     })
-
 }
 logoutbtn()
-
-let curbalance = 0
-let totalincome = 0
-let totalexpenses = 0
-let totaltransection = 0
-
-let transbtn = document.querySelector("#saveTxBtn")
-let type = document.querySelector("#txType")
-let amount = document.querySelector("#txAmount")
-transbtn.addEventListener("click", function () {
-     if(type.value.trim()=== "expense"){
-        if (document.querySelector("#txDesc").value.trim() === "") {
-        alert("please enter some discription")
-    } else if (amount.value.trim() === "") {
-        alert("please enter your amount")
-    } else if (document.querySelector("#txDate").value.trim() === "") {
-        alert("please select a date ")
-    } else if (document.querySelector("#txCat").value.trim() === "") {
-        alert("please select a catagory")
-    } else {
-        curbalance -= amount.value
-        totalexpenses += Number(amount.value)
-        document.querySelector(".amount").textContent = curbalance
-        document.querySelector(".amount2").textContent = totalexpenses 
-        totaltransection++; 
-        document.querySelector("#total").textContent = totaltransection;
-    }
-     }else{
-          if (document.querySelector("#txDesc").value.trim() === "") {
-        alert("please enter some discription")
-    } else if (amount.value.trim() === "") {
-        alert("please enter your amount")
-    } else if (document.querySelector("#txDate").value.trim() === "") {
-        alert("please select a date ")
-    } else if (document.querySelector("#txCat").value.trim() === "") {
-        alert("please select a catagory")
-    } else{
-          curbalance += Number(amount.value)
-          totalincome += Number(amount.value)
-        document.querySelector(".amount").textContent = curbalance 
-          document.querySelector(".amount3").textContent = totalincome
-           totaltransection++; 
-        document.querySelector("#total").textContent = totaltransection;
-    }
-     }
-})
-
-
-
-
-
-
-
 
 function settingspage() {
     let changeusername = document.querySelector("#saveUsername");
     let currencySelect = document.querySelector("#currencySelect");
 
     changeusername.addEventListener("click", function () {
-
         let username = document.querySelector("#newUsername").value.trim();
 
         if (username === "") {
@@ -269,5 +205,96 @@ function settingspage() {
         alert("Done!!!");
     });
 }
+settingspage(); 
+function updateBalanceDisplay() {
+    let curbalance = 0
+let totalincome = 0
+let totalexpenses = 0
+let totaltransection = 0
+    let currencySymbol = document.querySelector("#currencySelect").value;
+    let balanceSymbolEl = document.querySelector(".ft-cards .ft-card:first-child .currency-symbol");
+    let balanceAmountEl = document.querySelector(".amount");
 
-settingspage();
+    if (curbalance < 0) {
+        balanceSymbolEl.textContent = "-" + currencySymbol;
+        balanceAmountEl.textContent = Math.abs(curbalance);
+    } else {
+        balanceSymbolEl.textContent = currencySymbol;
+        balanceAmountEl.textContent = curbalance;
+    }
+} 
+ function transectionaddition(){
+    let transbtn = document.querySelector("#saveTxBtn")
+let type = document.querySelector("#txType")
+let amount = document.querySelector("#txAmount")
+let dis = document.querySelector("#txDesc")
+let det = document.querySelector("#txDate")
+let cat = document.querySelector("#txCat")
+
+transbtn.addEventListener("click", function () {
+    if (type.value.trim() === "expense") {
+        if (document.querySelector("#txDesc").value.trim() === "") {
+            alert("please enter some discription")
+        } else if (amount.value.trim() === "") {
+            alert("please enter your amount")
+        } else if (document.querySelector("#txDate").value.trim() === "") {
+            alert("please select a date ")
+        } else if (document.querySelector("#txCat").value.trim() === "") {
+            alert("please select a catagory")
+        } else {
+            curbalance -= Number(amount.value)
+            totalexpenses += Number(amount.value)
+
+            updateBalanceDisplay();
+            document.querySelector(".amount2").textContent = totalexpenses
+            totaltransection++;
+            document.querySelector("#total").textContent = totaltransection;
+            document.querySelector(".parenttransection").innerHTML += `<div class="transections">
+                                <div class="date">${det.value}</div>
+                                <div class="discripttion">${dis.value}</div>
+                                <div class="catagory">${cat.value}</div>
+                                <div style="color: red;" class="amaount">
+                                    <span class="currency-symbol">-$</span><span class="amount-value">${amount.value}</span>
+                                </div>
+                                <div class="actions">
+                                    <i class="ri-pencil-fill"></i>
+                                    <i class="ri-delete-bin-line"></i>
+                                </div>
+                            </div>`
+        }
+    } else {
+        if (document.querySelector("#txDesc").value.trim() === "") {
+            alert("please enter some discription")
+        } else if (amount.value.trim() === "") {
+            alert("please enter your amount")
+        } else if (document.querySelector("#txDate").value.trim() === "") {
+            alert("please select a date ")
+        } else if (document.querySelector("#txCat").value.trim() === "") {
+            alert("please select a catagory")
+        } else {
+            curbalance += Number(amount.value)
+            totalincome += Number(amount.value)
+
+            updateBalanceDisplay();
+            document.querySelector(".amount3").textContent = totalincome
+            totaltransection++;
+            document.querySelector("#total").textContent = totaltransection;
+             document.querySelector(".parenttransection").innerHTML += `<div class="transections">
+                                <div class="date">${det.value}</div>
+                                <div class="discripttion">${dis.value}</div>
+                                <div class="catagory">${cat.value}</div>
+                                <div style="color: green;" class="amaount">
+                                    <span class="currency-symbol">+$</span><span class="amount-value">${amount.value}</span>
+                                </div>
+                                <div class="actions">
+                                    <i class="ri-pencil-fill"></i>
+                                    <i class="ri-delete-bin-line"></i>
+                                </div>
+                            </div>`
+            
+        }
+        
+    }
+})
+ }
+ transectionaddition()

@@ -586,11 +586,20 @@ input:focus {
 .modal-row .field { flex: 1; }
 
 .transections{
- 
+ display: flex;
   padding-top:1vw ;
 font-size: 15px;
-display: flex;
+  border: 2px solid  var(--text-white);
+;
+  padding: 1vw .5vw;
+  border-radius: 15px;
   
+}
+.parenttransection{
+  display: flex;
+  flex-direction: column;
+  margin-top: 1vw;
+  gap: 20px;
 }
 .date{
   width: 14%;
@@ -618,3 +627,4 @@ display: flex;
 .ri-delete-bin-line{
   color: red;
 } 
+
