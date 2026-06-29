@@ -1,3 +1,10 @@
+// Variables - sabse upar taaki sab functions access kar sakein
+let curbalance = 0;
+let totalincome = 0;
+let totalexpenses = 0;
+let totaltransection = 0;
+let chart = null;
+
 function signclickfnc() {
     let signin = document.querySelector("#Sign-in");
     let signup = document.querySelector("#Sign-up");
@@ -81,12 +88,85 @@ function themetoggle() {
     });
 }
 
+// ===================== LOCAL STORAGE HELPERS =====================
+
+function saveTransactions() {
+    let transactions = [];
+    document.querySelectorAll(".transections").forEach(function (t) {
+        transactions.push({
+            type: t.dataset.type,
+            date: t.querySelector(".date").textContent.trim(),
+            desc: t.querySelector(".discripttion").textContent.trim(),
+            cat: t.querySelector(".catagory").textContent.trim(),
+            amount: t.querySelector(".amount-value").textContent.trim(),
+        });
+    });
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+    localStorage.setItem("curbalance", curbalance);
+    localStorage.setItem("totalincome", totalincome);
+    localStorage.setItem("totalexpenses", totalexpenses);
+    localStorage.setItem("totaltransection", totaltransection);
+}
+
+function buildTransactionHTML(tx) {
+    if (tx.type === "expense") {
+        return `<div class="transections" data-type="expense">
+            <div class="date">${tx.date}</div>
+            <div class="discripttion">${tx.desc}</div>
+            <div class="catagory">${tx.cat}</div>
+            <div style="color: red;" class="amaount">
+                <span class="currency-symbol">-$</span><span class="amount-value">${tx.amount}</span>
+            </div>
+            <div class="actions">
+                <i class="ri-pencil-fill"></i>
+                <i class="ri-delete-bin-line"></i>
+            </div>
+        </div>`;
+    } else {
+        return `<div class="transections" data-type="income">
+            <div class="date">${tx.date}</div>
+            <div class="discripttion">${tx.desc}</div>
+            <div class="catagory">${tx.cat}</div>
+            <div style="color: green;" class="amaount">
+                <span class="currency-symbol">+$</span><span class="amount-value">${tx.amount}</span>
+            </div>
+            <div class="actions">
+                <i class="ri-pencil-fill"></i>
+                <i class="ri-delete-bin-line"></i>
+            </div>
+        </div>`;
+    }
+}
+
+function loadTransactions() {
+    let saved = localStorage.getItem("transactions");
+    if (!saved) return;
+
+    let transactions = JSON.parse(saved);
+    curbalance = Number(localStorage.getItem("curbalance")) || 0;
+    totalincome = Number(localStorage.getItem("totalincome")) || 0;
+    totalexpenses = Number(localStorage.getItem("totalexpenses")) || 0;
+    totaltransection = Number(localStorage.getItem("totaltransection")) || 0;
+
+    transactions.forEach(function (tx) {
+        document.querySelector(".parenttransection").innerHTML += buildTransactionHTML(tx);
+    });
+
+    document.querySelector(".amount2").textContent = totalexpenses;
+    document.querySelector(".amount3").textContent = totalincome;
+    document.querySelector("#total").textContent = totaltransection;
+    updateBalanceDisplay();
+}
+
+// ===================== END LOCAL STORAGE HELPERS =====================
+
 function showDashboard() {
     document.querySelector(".loginsection").style.display = "none";
     document.querySelector(".section").style.display = "block";
     let username = localStorage.getItem("username");
     document.querySelector("#adminname").textContent = username.toUpperCase();
     themetoggle();
+    loadTransactions();
 }
 
 function completeloginpage() {
@@ -205,10 +285,9 @@ function settingspage() {
 }
 settingspage();
 
-// Chart pehle banao
- function chart(){
-    const ctx = document.querySelector("#myChart");
-const chart = new Chart(ctx, {
+// Chart
+const ctx = document.querySelector("#myChart");
+chart = new Chart(ctx, {
     type: "bar",
     data: {
         labels: ["Income", "Expense"],
@@ -233,22 +312,11 @@ const chart = new Chart(ctx, {
         },
         scales: {
             x: { grid: { display: false } },
-            y: {
-    beginAtZero: true
-}
+            y: { beginAtZero: true }
         }
     }
 });
- }
- chart()
 
-// Variables
-let curbalance = 0;
-let totalincome = 0;
-let totalexpenses = 0;
-let totaltransection = 0;
-
-// Ek hi updateBalanceDisplay — chart update bhi isme
 function updateBalanceDisplay() {
     let currencySymbol = document.querySelector("#currencySelect").value;
     let balanceSymbolEl = document.querySelector(".ft-cards .ft-card:first-child .currency-symbol");
@@ -262,8 +330,10 @@ function updateBalanceDisplay() {
         balanceAmountEl.textContent = curbalance;
     }
 
-    chart.data.datasets[0].data = [totalincome, totalexpenses];
-    chart.update();
+    if (chart) {
+        chart.data.datasets[0].data = [totalincome, totalexpenses];
+        chart.update();
+    }
 }
 
 function addition() {
@@ -291,18 +361,14 @@ function addition() {
                 document.querySelector(".amount2").textContent = totalexpenses;
                 totaltransection++;
                 document.querySelector("#total").textContent = totaltransection;
-                document.querySelector(".parenttransection").innerHTML += `<div class="transections" data-type="expense">
-                    <div class="date">${det.value}</div>
-                    <div class="discripttion">${dis.value}</div>
-                    <div class="catagory">${cat.value}</div>
-                    <div style="color: red;" class="amaount">
-                        <span class="currency-symbol">-$</span><span class="amount-value">${amount.value}</span>
-                    </div>
-                    <div class="actions">
-                        <i class="ri-pencil-fill"></i>
-                        <i class="ri-delete-bin-line"></i>
-                    </div>
-                </div>`;
+                document.querySelector(".parenttransection").innerHTML += buildTransactionHTML({
+                    type: "expense",
+                    date: det.value,
+                    desc: dis.value,
+                    cat: cat.value,
+                    amount: amount.value
+                });
+                saveTransactions();
             }
         } else {
             if (dis.value.trim() === "") {
@@ -320,18 +386,14 @@ function addition() {
                 document.querySelector(".amount3").textContent = totalincome;
                 totaltransection++;
                 document.querySelector("#total").textContent = totaltransection;
-                document.querySelector(".parenttransection").innerHTML += `<div class="transections" data-type="income">
-                    <div class="date">${det.value}</div>
-                    <div class="discripttion">${dis.value}</div>
-                    <div class="catagory">${cat.value}</div>
-                    <div style="color: green;" class="amaount">
-                        <span class="currency-symbol">+$</span><span class="amount-value">${amount.value}</span>
-                    </div>
-                    <div class="actions">
-                        <i class="ri-pencil-fill"></i>
-                        <i class="ri-delete-bin-line"></i>
-                    </div>
-                </div>`;
+                document.querySelector(".parenttransection").innerHTML += buildTransactionHTML({
+                    type: "income",
+                    date: det.value,
+                    desc: dis.value,
+                    cat: cat.value,
+                    amount: amount.value
+                });
+                saveTransactions();
             }
         }
     });
@@ -376,7 +438,77 @@ function resetbtn() {
 
         chart.data.datasets[0].data = [0, 0];
         chart.update();
+
+        localStorage.removeItem("transactions");
+        localStorage.removeItem("curbalance");
+        localStorage.removeItem("totalincome");
+        localStorage.removeItem("totalexpenses");
+        localStorage.removeItem("totaltransection");
     });
 }
 resetbtn();
 
+function deletefnc() {
+    document.querySelector(".parenttransection").addEventListener("click", function (e) {
+        if (e.target.classList.contains("ri-delete-bin-line")) {
+            let transaction = e.target.closest(".transections");
+            let type = transaction.dataset.type;
+            let amount = Number(transaction.querySelector(".amount-value").textContent);
+
+            if (type === "expense") {
+                curbalance += amount;
+                totalexpenses -= amount;
+                document.querySelector(".amount2").textContent = totalexpenses;
+            } else {
+                curbalance -= amount;
+                totalincome -= amount;
+                document.querySelector(".amount3").textContent = totalincome;
+            }
+
+            totaltransection--;
+            document.querySelector("#total").textContent = totaltransection;
+            transaction.remove();
+            updateBalanceDisplay();
+            saveTransactions();
+        }
+    });
+}
+deletefnc();
+
+document.querySelector(".parenttransection").addEventListener("click", function (e) {
+    if (e.target.classList.contains("ri-pencil-fill")) {
+        let transaction = e.target.closest(".transections");
+        let type = transaction.dataset.type;
+        let amount = transaction.querySelector(".amount-value").textContent;
+        let desc = transaction.querySelector(".discripttion").textContent.trim();
+        let date = transaction.querySelector(".date").textContent.trim();
+        let cat = transaction.querySelector(".catagory").textContent.trim();
+
+        document.querySelector("#txType").value = type;
+        document.querySelector("#txDesc").value = desc;
+        document.querySelector("#txAmount").value = amount;
+        document.querySelector("#txDate").value = date;
+        document.querySelector("#txCat").value = cat;
+
+        document.querySelector(".modal-overlay").style.display = "flex";
+
+        let oldType = type;
+        let oldAmount = Number(amount);
+
+        if (oldType === "expense") {
+            curbalance += oldAmount;
+            totalexpenses -= oldAmount;
+            document.querySelector(".amount2").textContent = totalexpenses;
+        } else {
+            curbalance -= oldAmount;
+            totalincome -= oldAmount;
+            document.querySelector(".amount3").textContent = totalincome;
+        }
+
+        totaltransection--;
+        document.querySelector("#total").textContent = totaltransection;
+        transaction.remove();
+        updateBalanceDisplay();
+        saveTransactions();
+    }
+});
