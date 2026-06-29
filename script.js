@@ -247,25 +247,27 @@ transbtn.addEventListener("click", function () {
 
 
 
+function settingspage() {
+    let changeusername = document.querySelector("#saveUsername");
+    let currencySelect = document.querySelector("#currencySelect");
 
-function settingspage(){
-    let changeusername = document.querySelector("#saveUsername")
+    changeusername.addEventListener("click", function () {
 
-changeusername.addEventListener("click",function(){ 
-  document.querySelector("#adminname").textContent = document.querySelector("#newUsername").value.trim().toUpperCase()
+        let username = document.querySelector("#newUsername").value.trim();
 
-  let currencySelect = document.querySelector("#currencySelect");
+        if (username === "") {
+            alert("Please select a name");
+            return;
+        }
 
-currencySelect.addEventListener("change", function () {
-    let symbols = document.querySelectorAll(".currency-symbol");
+        document.querySelector("#adminname").textContent = username.toUpperCase();
 
-    symbols.forEach(function (symbol) {
-        symbol.textContent = currencySelect.value;
+        document.querySelectorAll(".currency-symbol").forEach(function (symbol) {
+            symbol.textContent = currencySelect.value;
+        });
+
+        alert("Done!!!");
     });
-});
-    
-})
+}
 
- }
-
-settingspage()
+settingspage();
