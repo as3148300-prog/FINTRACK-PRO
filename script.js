@@ -5,7 +5,21 @@ let transactionCount = 0;
 let chart = null;
 let editingRow = null;
  
+document.querySelector("#hamburgerBtn").addEventListener("click", function () {
+    document.querySelector("#ftSidebar").classList.toggle("open");
+    document.querySelector("#sidebarOverlay").classList.toggle("open");
+});
 
+document.querySelector("#sidebarOverlay").addEventListener("click", function () {
+    document.querySelector("#ftSidebar").classList.remove("open");
+    document.querySelector("#sidebarOverlay").classList.remove("open");
+});
+
+function closeSidebar() {
+    document.querySelector("#ftSidebar").classList.remove("open");
+    document.querySelector("#sidebarOverlay").classList.remove("open");
+}
+ 
 document.querySelector("#Sign-up").addEventListener("click", function () {
     document.querySelector("#signupForm").style.display = "block";
     document.querySelector("#signinForm").style.display = "none";
@@ -24,7 +38,6 @@ document.querySelector("#Sign-in").addEventListener("click", function () {
     document.querySelector("#Sign-up").style.color = "#888";
 });
  
-
 document.querySelector("#upbtn").addEventListener("click", function () {
     let name = document.querySelector("#signupusername").value.trim();
     let pass = document.querySelector("#signuppassword").value.trim();
@@ -51,7 +64,6 @@ document.querySelector("#upbtn").addEventListener("click", function () {
     }
 });
  
-
 document.querySelector("#inbtn").addEventListener("click", function () {
     let name = document.querySelector("#username").value.trim();
     let pass = document.querySelector("#password").value.trim();
@@ -60,7 +72,7 @@ document.querySelector("#inbtn").addEventListener("click", function () {
 
     if (name === "" && pass === "") {
         alert("Please enter your username and password");
-    } else if (name === "" ) {
+    } else if (name === "") {
         alert("Please enter your username");
     } else if (pass === "") {
         alert("Please enter your password");
@@ -74,9 +86,7 @@ document.querySelector("#inbtn").addEventListener("click", function () {
         localStorage.setItem("loggedIn", "true");
         showDashboard();
     }
-});
- 
-
+}); 
 function showDashboard() {
     document.querySelector(".loginsection").style.display = "none";
     document.querySelector(".section").style.display = "block";
@@ -88,13 +98,11 @@ function showDashboard() {
     setupChart();
     loadFromStorage();
 }
- 
 
 if (localStorage.getItem("username") && localStorage.getItem("loggedIn") === "true") {
     showDashboard();
 }
  
-
 function setupTheme() {
     let toggle = document.querySelector(".ft-toggle");
     if (!toggle) return;
@@ -139,7 +147,6 @@ function setupTheme() {
     });
 }
  
-
 function setupChart() {
     let ctx = document.querySelector("#myChart");
     chart = new Chart(ctx, {
@@ -152,7 +159,7 @@ function setupChart() {
                 backgroundColor: ["#22C55E", "#EF4444"],
                 borderRadius: 8,
                 borderWidth: 0,
-                barThickness: 150
+                barThickness: 80
             }]
         },
         options: {
@@ -160,17 +167,23 @@ function setupChart() {
             maintainAspectRatio: false,
             plugins: {
                 legend: { display: false },
-                title: { display: true, text: "Income vs Expense" }
+                title: { display: true, text: "Income vs Expense", color: "#a0aec0" }
             },
             scales: {
-                x: { grid: { display: false } },
-                y: { beginAtZero: true }
+                x: {
+                    grid: { display: false },
+                    ticks: { color: "#a0aec0" }
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: "#a0aec0" },
+                    grid: { color: "rgba(255,255,255,0.05)" }
+                }
             }
         }
     });
 }
  
-
 function updateDisplay() {
     let symbol = document.querySelector("#currencySelect").value;
     let symbolEl = document.querySelector(".ft-cards .ft-card:first-child .currency-symbol");
@@ -178,28 +191,29 @@ function updateDisplay() {
 
     if (balance < 0) {
         symbolEl.textContent = "-" + symbol;
-        amountEl.textContent = Math.abs(balance);
+        amountEl.textContent = Math.abs(balance).toFixed(2);
     } else {
         symbolEl.textContent = symbol;
-        amountEl.textContent = balance;
+        amountEl.textContent = balance.toFixed(2);
     }
 
     if (chart) {
         chart.data.datasets[0].data = [income, expense];
         chart.update();
     }
-} 
-
+}
+ 
 function makeTransactionHTML(type, date, desc, cat, amount) {
     let color = type === "expense" ? "red" : "green";
-    let sign = type === "expense" ? "-$" : "+$";
+    let sign = type === "expense" ? "-" : "+";
+    let symbol = document.querySelector("#currencySelect") ? document.querySelector("#currencySelect").value : "$";
 
     return `<div class="transections" data-type="${type}">
         <div class="date">${date}</div>
         <div class="discripttion">${desc}</div>
         <div class="catagory">${cat}</div>
         <div style="color: ${color};" class="amaount">
-            <span class="currency-symbol">${sign}</span><span class="amount-value">${amount}</span>
+            <span class="currency-symbol">${sign}${symbol}</span><span class="amount-value">${Number(amount).toFixed(2)}</span>
         </div>
         <div class="actions">
             <i class="ri-pencil-fill"></i>
@@ -208,7 +222,6 @@ function makeTransactionHTML(type, date, desc, cat, amount) {
     </div>`;
 }
  
-
 function saveToStorage() {
     let rows = [];
     document.querySelectorAll(".transections").forEach(function (row) {
@@ -225,8 +238,8 @@ function saveToStorage() {
     localStorage.setItem("income", income);
     localStorage.setItem("expense", expense);
     localStorage.setItem("transactionCount", transactionCount);
-} 
-
+}
+ 
 function loadFromStorage() {
     let saved = localStorage.getItem("transactions");
     if (!saved) return;
@@ -241,15 +254,13 @@ function loadFromStorage() {
         document.querySelector(".parenttransection").innerHTML += makeTransactionHTML(row.type, row.date, row.desc, row.cat, row.amount);
     });
 
-    document.querySelector(".amount2").textContent = expense;
-    document.querySelector(".amount3").textContent = income;
+    document.querySelector(".amount2").textContent = Number(expense).toFixed(2);
+    document.querySelector(".amount3").textContent = Number(income).toFixed(2);
     document.querySelector("#total").textContent = transactionCount;
     updateDisplay();
 }
  
-
 document.querySelector("#saveTxBtn").addEventListener("click", function () {
-
     let type = document.querySelector("#txType").value.trim();
     let amount = document.querySelector("#txAmount").value.trim();
     let desc = document.querySelector("#txDesc").value.trim();
@@ -260,25 +271,25 @@ document.querySelector("#saveTxBtn").addEventListener("click", function () {
     if (amount === "") { alert("Please enter an amount"); return; }
     if (date === "") { alert("Please select a date"); return; }
     if (cat === "") { alert("Please select a category"); return; }
- 
+
     if (editingRow) {
         let newHTML = makeTransactionHTML(type, date, desc, cat, amount);
         let temp = document.createElement("div");
         temp.innerHTML = newHTML;
         editingRow.replaceWith(temp.firstElementChild);
         editingRow = null;
-    } else { 
+    } else {
         document.querySelector(".parenttransection").innerHTML += makeTransactionHTML(type, date, desc, cat, amount);
     }
 
     if (type === "expense") {
         balance -= Number(amount);
         expense += Number(amount);
-        document.querySelector(".amount2").textContent = expense;
+        document.querySelector(".amount2").textContent = expense.toFixed(2);
     } else {
         balance += Number(amount);
         income += Number(amount);
-        document.querySelector(".amount3").textContent = income;
+        document.querySelector(".amount3").textContent = income.toFixed(2);
     }
 
     transactionCount++;
@@ -289,7 +300,6 @@ document.querySelector("#saveTxBtn").addEventListener("click", function () {
     document.querySelector(".modal-overlay").style.display = "none";
 });
  
-
 document.querySelector(".parenttransection").addEventListener("click", function (e) {
     if (e.target.classList.contains("ri-delete-bin-line")) {
         let row = e.target.closest(".transections");
@@ -299,11 +309,11 @@ document.querySelector(".parenttransection").addEventListener("click", function 
         if (type === "expense") {
             balance += amount;
             expense -= amount;
-            document.querySelector(".amount2").textContent = expense;
+            document.querySelector(".amount2").textContent = expense.toFixed(2);
         } else {
             balance -= amount;
             income -= amount;
-            document.querySelector(".amount3").textContent = income;
+            document.querySelector(".amount3").textContent = income.toFixed(2);
         }
 
         transactionCount--;
@@ -314,7 +324,6 @@ document.querySelector(".parenttransection").addEventListener("click", function 
     }
 });
  
-
 document.querySelector(".parenttransection").addEventListener("click", function (e) {
     if (e.target.classList.contains("ri-pencil-fill")) {
         let row = e.target.closest(".transections");
@@ -332,15 +341,15 @@ document.querySelector(".parenttransection").addEventListener("click", function 
         document.querySelector("#txCat").value = cat;
 
         editingRow = row;
- 
+
         if (type === "expense") {
             balance += Number(amount);
             expense -= Number(amount);
-            document.querySelector(".amount2").textContent = expense;
+            document.querySelector(".amount2").textContent = expense.toFixed(2);
         } else {
             balance -= Number(amount);
             income -= Number(amount);
-            document.querySelector(".amount3").textContent = income;
+            document.querySelector(".amount3").textContent = income.toFixed(2);
         }
 
         transactionCount--;
@@ -351,10 +360,10 @@ document.querySelector(".parenttransection").addEventListener("click", function 
     }
 });
  
-
 document.querySelector(".ft-add-btn").addEventListener("click", function () {
     editingRow = null;
     document.querySelector(".modal-overlay").style.display = "flex";
+    closeSidebar();
 });
 
 document.querySelector(".modal-close").addEventListener("click", function () {
@@ -362,12 +371,12 @@ document.querySelector(".modal-close").addEventListener("click", function () {
     document.querySelector(".modal-overlay").style.display = "none";
 });
  
-
 document.querySelector("#settings").addEventListener("click", function () {
     document.querySelector(".ft-main").style.display = "none";
     document.querySelector("#settings").style.backgroundColor = "var(--active-bg)";
     document.querySelector(".ft-nav-item").style.backgroundColor = "transparent";
     document.querySelector(".settingsection").style.display = "block";
+    closeSidebar();
 });
 
 document.querySelector(".ft-nav-item").addEventListener("click", function () {
@@ -375,9 +384,9 @@ document.querySelector(".ft-nav-item").addEventListener("click", function () {
     document.querySelector("#settings").style.backgroundColor = "transparent";
     document.querySelector(".ft-nav-item").style.backgroundColor = "var(--active-bg)";
     document.querySelector(".settingsection").style.display = "none";
+    closeSidebar();
 });
  
-
 document.querySelector("#saveUsername").addEventListener("click", function () {
     let newName = document.querySelector("#newUsername").value.trim();
     let currency = document.querySelector("#currencySelect").value;
@@ -390,19 +399,23 @@ document.querySelector("#saveUsername").addEventListener("click", function () {
     document.querySelector("#adminname").textContent = newName.toUpperCase();
 
     document.querySelectorAll(".currency-symbol").forEach(function (el) {
-        el.textContent = currency;
+        let text = el.textContent;
+        // preserve sign (+ or -)
+        if (text.startsWith("+") || text.startsWith("-")) {
+            el.textContent = text[0] + currency;
+        } else {
+            el.textContent = currency;
+        }
     });
 
     alert("Done!");
 });
  
-
 document.querySelector(".ft-logout-btn").addEventListener("click", function () {
     document.querySelector(".loginsection").style.display = "flex";
     document.querySelector(".section").style.display = "none";
 });
  
-
 function filterTransactions() {
     let search = document.querySelector(".ft-search").value.toLowerCase();
     let filterVal = document.querySelector(".ft-filter-select").value.toLowerCase();
@@ -412,7 +425,7 @@ function filterTransactions() {
         let type = row.dataset.type;
 
         if (text.includes(search) && (filterVal === "all types" || type === filterVal)) {
-            row.style.display = "flex";
+            row.style.display = "";
         } else {
             row.style.display = "none";
         }
@@ -422,7 +435,6 @@ function filterTransactions() {
 document.querySelector(".ft-search").addEventListener("input", filterTransactions);
 document.querySelector(".ft-filter-select").addEventListener("change", filterTransactions);
  
-
 document.querySelector(".ft-reset-btn").addEventListener("click", function () {
     balance = 0;
     income = 0;

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>FinTrack Pro</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,11 +52,15 @@
                 </div>
             </div>
         </div>
+
         <div class="section">
+ 
+            <button class="ft-hamburger" id="hamburgerBtn">&#9776;</button> 
+            <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
             <div class="ft-wrap">
- 
-                <div class="ft-sidebar">
+
+                <div class="ft-sidebar" id="ftSidebar">
                     <div>
                         <div class="ft-logo-title">
                             <h3><i class="ri-stack-line"></i> FinTrack Pro</h3>
@@ -69,7 +73,7 @@
                     </nav>
                     <button class="ft-add-btn">+ Add Transaction</button>
                 </div>
- 
+
                 <div class="settingsection">
                     <div class="ft-settings-box">
                         <div class="ft-section-title" style="font-size:22px;">Settings</div>
@@ -97,6 +101,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="ft-main">
                     <div class="modal-overlay" id="modalOverlay">
                         <div class="modal-box">
@@ -144,7 +149,8 @@
                                 <button class="btn" id="saveTxBtn">Save Transaction</button>
                             </div>
                         </div>
-                    </div> 
+                    </div>
+
                     <div class="ft-topbar">
                         <div>
                             <div class="ft-page-title">Financial Overview</div>
@@ -152,10 +158,10 @@
                         </div>
                         <div class="ft-user">
                             <span id="adminname">areeb@123</span>
-                            <button class="ft-logout-btn"> Logout</button>
+                            <button class="ft-logout-btn">Logout</button>
                         </div>
                     </div>
- 
+
                     <div class="ft-cards">
                         <div class="ft-card">
                             <div class="ft-card-icon" style="background:#1e3a5f;">&#127970;</div>
@@ -184,16 +190,14 @@
                             <div class="ft-card-label">Total Transactions</div>
                             <div id="total" class="ft-card-value">0</div>
                         </div>
-
                     </div>
 
- 
                     <div class="ft-bottom">
                         <div class="ft-chart-box">
                             <div class="ft-section-title">Cash Flow Analysis</div>
-                           <div class="ft-chart-area">
-    <canvas id="myChart"></canvas>
-</div>
+                            <div class="ft-chart-area">
+                                <canvas id="myChart"></canvas>
+                            </div>
                         </div>
                         <div class="ft-pref-box">
                             <div class="ft-section-title">Preferences</div>
@@ -204,8 +208,7 @@
                             <button class="ft-reset-btn">&#128465; Reset All Data</button>
                         </div>
                     </div>
-
-                    <!-- Transactions Table -->
+ 
                     <div class="ft-table-box">
                         <div class="ft-section-title">All Transactions</div>
                         <div class="ft-table-filters">
@@ -226,16 +229,13 @@
                                     <th>ACTIONS</th>
                                 </tr>
                             </thead>
-
                         </table>
-                        <div class="parenttransection">
-
-                        </div>
-
+                        <div class="parenttransection"></div>
                     </div>
                 </div>
 
             </div>
+        </div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
