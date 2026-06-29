@@ -319,13 +319,13 @@ input:focus {
   background-color: var(--main-bg);
   border-radius: 8px;
   height: 304px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--border-dark);
-  font-size: 13px;
+  padding: 1rem;
 }
 
+.ft-chart-area canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
 /* === PREFERENCES === */
 .ft-pref-box {
   width: 240px;

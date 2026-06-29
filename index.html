@@ -164,10 +164,10 @@
                         <div class="ft-card">
                             <div class="ft-card-icon" style="background:#1e3a5f;">&#127970;</div>
                             <div class="ft-card-label">Current Balance</div>
-                           <div class="ft-card-value">
-    <span class="currency-symbol">$</span>
-    <span class="amount">0.00</span>
-</div>
+                            <div class="ft-card-value">
+                                <span class="currency-symbol">$</span>
+                                <span class="amount">0.00</span>
+                            </div>
                         </div>
                         <div class="ft-card">
                             <div class="ft-card-icon" style="background:#14532d;">&#128200;</div>
@@ -196,7 +196,9 @@
                     <div class="ft-bottom">
                         <div class="ft-chart-box">
                             <div class="ft-section-title">Cash Flow Analysis</div>
-                            <div class="ft-chart-area">Income vs Expenses chart yahan aayega</div>
+                           <div class="ft-chart-area">
+    <canvas id="myChart"></canvas>
+</div>
                         </div>
                         <div class="ft-pref-box">
                             <div class="ft-section-title">Preferences</div>
@@ -229,12 +231,7 @@
                                     <th>ACTIONS</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <!-- <tr>
-                                    <td colspan="5" style="text-align:center; color:#3b4f70; padding: 2rem;">Koi
-                                        transaction nahi mili</td>
-                                </tr> -->
-                            </tbody>
+
                         </table>
                         <div class="parenttransection">
 
@@ -246,6 +243,7 @@
             </div>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
 

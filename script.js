@@ -90,7 +90,6 @@ function showDashboard() {
 }
 
 function completeloginpage() {
-
     let signinbtn = document.querySelector("#inbtn");
     let signupbtn = document.querySelector("#upbtn");
     let nameinp = document.querySelector("#username");
@@ -151,38 +150,37 @@ completeloginpage();
 
 function settingopenandclosefnc() {
     document.querySelector("#settings").addEventListener("click", function () {
-        document.querySelector(".ft-main").style.display = "none"
-        document.querySelector("#settings").style.backgroundColor = "var(--active-bg)"
-        document.querySelector(".ft-nav-item").style.backgroundColor = "transparent"
-        document.querySelector(".settingsection").style.display = "block"
-    })
+        document.querySelector(".ft-main").style.display = "none";
+        document.querySelector("#settings").style.backgroundColor = "var(--active-bg)";
+        document.querySelector(".ft-nav-item").style.backgroundColor = "transparent";
+        document.querySelector(".settingsection").style.display = "block";
+    });
     document.querySelector(".ft-nav-item").addEventListener("click", function () {
-        document.querySelector(".ft-main").style.display = "flex"
-        document.querySelector("#settings").style.backgroundColor = "transparent"
-        document.querySelector(".ft-nav-item").style.backgroundColor = "var(--active-bg)"
-        document.querySelector(".settingsection").style.display = "none"
-    })
+        document.querySelector(".ft-main").style.display = "flex";
+        document.querySelector("#settings").style.backgroundColor = "transparent";
+        document.querySelector(".ft-nav-item").style.backgroundColor = "var(--active-bg)";
+        document.querySelector(".settingsection").style.display = "none";
+    });
 }
-settingopenandclosefnc()
+settingopenandclosefnc();
 
 function addtransectionbtn() {
     document.querySelector(".ft-add-btn").addEventListener("click", function () {
-        document.querySelector(".modal-overlay").style.display = "flex"
-    })
-
+        document.querySelector(".modal-overlay").style.display = "flex";
+    });
     document.querySelector(".modal-close").addEventListener("click", function () {
-        document.querySelector(".modal-overlay").style.display = "none"
-    })
+        document.querySelector(".modal-overlay").style.display = "none";
+    });
 }
-addtransectionbtn()
+addtransectionbtn();
 
 function logoutbtn() {
     document.querySelector(".ft-logout-btn").addEventListener("click", function () {
-        document.querySelector(".loginsection").style.display = "flex"
-        document.querySelector(".section").style.display = "none"
-    })
+        document.querySelector(".loginsection").style.display = "flex";
+        document.querySelector(".section").style.display = "none";
+    });
 }
-logoutbtn()
+logoutbtn();
 
 function settingspage() {
     let changeusername = document.querySelector("#saveUsername");
@@ -207,13 +205,51 @@ function settingspage() {
 }
 settingspage();
 
-let curbalance = 0
-let totalincome = 0
-let totalexpenses = 0
-let totaltransection = 0
+// Chart pehle banao
+ function chart(){
+    const ctx = document.querySelector("#myChart");
+const chart = new Chart(ctx, {
+    type: "bar",
+    data: {
+        labels: ["Income", "Expense"],
+        datasets: [{
+            label: "Amount",
+            data: [0, 0],
+            backgroundColor: ["#22C55E", "#EF4444"],
+            borderRadius: 8,
+            borderWidth: 0,
+            barThickness: 150,
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: "Income vs Expense",
+            }
+        },
+        scales: {
+            x: { grid: { display: false } },
+            y: {
+    beginAtZero: true
+}
+        }
+    }
+});
+ }
+ chart()
 
+// Variables
+let curbalance = 0;
+let totalincome = 0;
+let totalexpenses = 0;
+let totaltransection = 0;
+
+// Ek hi updateBalanceDisplay — chart update bhi isme
 function updateBalanceDisplay() {
-    
     let currencySymbol = document.querySelector("#currencySelect").value;
     let balanceSymbolEl = document.querySelector(".ft-cards .ft-card:first-child .currency-symbol");
     let balanceAmountEl = document.querySelector(".amount");
@@ -225,109 +261,122 @@ function updateBalanceDisplay() {
         balanceSymbolEl.textContent = currencySymbol;
         balanceAmountEl.textContent = curbalance;
     }
+
+    chart.data.datasets[0].data = [totalincome, totalexpenses];
+    chart.update();
 }
 
- function addition (){
-    let transbtn = document.querySelector("#saveTxBtn")
-let type = document.querySelector("#txType")
-let amount = document.querySelector("#txAmount")
-let dis = document.querySelector("#txDesc")
-let det = document.querySelector("#txDate")
-let cat = document.querySelector("#txCat")
+function addition() {
+    let transbtn = document.querySelector("#saveTxBtn");
+    let type = document.querySelector("#txType");
+    let amount = document.querySelector("#txAmount");
+    let dis = document.querySelector("#txDesc");
+    let det = document.querySelector("#txDate");
+    let cat = document.querySelector("#txCat");
 
-transbtn.addEventListener("click", function () {
-    if (type.value.trim() === "expense") {
-        if (document.querySelector("#txDesc").value.trim() === "") {
-            alert("please enter some discription")
-        } else if (amount.value.trim() === "") {
-            alert("please enter your amount")
-        } else if (document.querySelector("#txDate").value.trim() === "") {
-            alert("please select a date ")
-        } else if (document.querySelector("#txCat").value.trim() === "") {
-            alert("please select a catagory")
+    transbtn.addEventListener("click", function () {
+        if (type.value.trim() === "expense") {
+            if (dis.value.trim() === "") {
+                alert("please enter some discription");
+            } else if (amount.value.trim() === "") {
+                alert("please enter your amount");
+            } else if (det.value.trim() === "") {
+                alert("please select a date");
+            } else if (cat.value.trim() === "") {
+                alert("please select a catagory");
+            } else {
+                curbalance -= Number(amount.value);
+                totalexpenses += Number(amount.value);
+                updateBalanceDisplay();
+                document.querySelector(".amount2").textContent = totalexpenses;
+                totaltransection++;
+                document.querySelector("#total").textContent = totaltransection;
+                document.querySelector(".parenttransection").innerHTML += `<div class="transections" data-type="expense">
+                    <div class="date">${det.value}</div>
+                    <div class="discripttion">${dis.value}</div>
+                    <div class="catagory">${cat.value}</div>
+                    <div style="color: red;" class="amaount">
+                        <span class="currency-symbol">-$</span><span class="amount-value">${amount.value}</span>
+                    </div>
+                    <div class="actions">
+                        <i class="ri-pencil-fill"></i>
+                        <i class="ri-delete-bin-line"></i>
+                    </div>
+                </div>`;
+            }
         } else {
-            curbalance -= Number(amount.value)
-            totalexpenses += Number(amount.value)
-
-            updateBalanceDisplay();
-            document.querySelector(".amount2").textContent = totalexpenses
-            totaltransection++;
-            document.querySelector("#total").textContent = totaltransection;
-          document.querySelector(".parenttransection").innerHTML += `<div class="transections" data-type="expense">
-                                <div class="date">${det.value}</div>
-                                <div class="discripttion">${dis.value}</div>
-                                <div class="catagory">${cat.value}</div>
-                                <div style="color: red;" class="amaount">
-                                    <span class="currency-symbol">-$</span><span class="amount-value">${amount.value}</span>
-                                </div>
-                                <div class="actions">
-                                    <i class="ri-pencil-fill"></i>
-                                    <i class="ri-delete-bin-line"></i>
-                                </div>
-                            </div>`
-        }
-    } else {
-        if (document.querySelector("#txDesc").value.trim() === "") {
-            alert("please enter some discription")
-        } else if (amount.value.trim() === "") {
-            alert("please enter your amount")
-        } else if (document.querySelector("#txDate").value.trim() === "") {
-            alert("please select a date ")
-        } else if (document.querySelector("#txCat").value.trim() === "") {
-            alert("please select a catagory")
-        } else {
-            curbalance += Number(amount.value)
-            totalincome += Number(amount.value)
-
-            updateBalanceDisplay();
-            document.querySelector(".amount3").textContent = totalincome
-            totaltransection++;
-            document.querySelector("#total").textContent = totaltransection;
-             document.querySelector(".parenttransection").innerHTML += `<div class="transections" data-type="income">
-                                <div class="date">${det.value}</div>
-                                <div class="discripttion">${dis.value}</div>
-                                <div class="catagory">${cat.value}</div>
-                                <div style="color: green;" class="amaount">
-                                    <span class="currency-symbol">+$</span><span class="amount-value">${amount.value}</span>
-                                </div>
-                                <div class="actions">
-                                    <i class="ri-pencil-fill"></i>
-                                    <i class="ri-delete-bin-line"></i>
-                                </div>
-                            </div>`
-            
-        }
-        
-    }
-})
- }
- addition()
-
-
- function filter(){
-    function filterTransactions() {
-    let search = document.querySelector(".ft-search").value.toLowerCase();
-    let filter = document.querySelector(".ft-filter-select").value.toLowerCase();
-    let transactions = document.querySelectorAll(".transections");
-
-    transactions.forEach(function (t) {
-        let text = t.textContent.toLowerCase();
-        let type = t.dataset.type;
-
-        if (text.includes(search) && (filter === "all types" || type === filter)) {
-            t.style.display = "flex";
-        } else {
-            t.style.display = "none";
+            if (dis.value.trim() === "") {
+                alert("please enter some discription");
+            } else if (amount.value.trim() === "") {
+                alert("please enter your amount");
+            } else if (det.value.trim() === "") {
+                alert("please select a date");
+            } else if (cat.value.trim() === "") {
+                alert("please select a catagory");
+            } else {
+                curbalance += Number(amount.value);
+                totalincome += Number(amount.value);
+                updateBalanceDisplay();
+                document.querySelector(".amount3").textContent = totalincome;
+                totaltransection++;
+                document.querySelector("#total").textContent = totaltransection;
+                document.querySelector(".parenttransection").innerHTML += `<div class="transections" data-type="income">
+                    <div class="date">${det.value}</div>
+                    <div class="discripttion">${dis.value}</div>
+                    <div class="catagory">${cat.value}</div>
+                    <div style="color: green;" class="amaount">
+                        <span class="currency-symbol">+$</span><span class="amount-value">${amount.value}</span>
+                    </div>
+                    <div class="actions">
+                        <i class="ri-pencil-fill"></i>
+                        <i class="ri-delete-bin-line"></i>
+                    </div>
+                </div>`;
+            }
         }
     });
 }
+addition();
 
-document.querySelector(".ft-search").addEventListener("input", filterTransactions);
-document.querySelector(".ft-filter-select").addEventListener("change", filterTransactions);
+function filter() {
+    function filterTransactions() {
+        let search = document.querySelector(".ft-search").value.toLowerCase();
+        let filter = document.querySelector(".ft-filter-select").value.toLowerCase();
+        let transactions = document.querySelectorAll(".transections");
 
+        transactions.forEach(function (t) {
+            let text = t.textContent.toLowerCase();
+            let type = t.dataset.type;
 
- }
+            if (text.includes(search) && (filter === "all types" || type === filter)) {
+                t.style.display = "flex";
+            } else {
+                t.style.display = "none";
+            }
+        });
+    }
 
- filter()
+    document.querySelector(".ft-search").addEventListener("input", filterTransactions);
+    document.querySelector(".ft-filter-select").addEventListener("change", filterTransactions);
+}
+filter();
 
- 
+function resetbtn() {
+    document.querySelector(".ft-reset-btn").addEventListener("click", function () {
+        curbalance = 0;
+        totalincome = 0;
+        totalexpenses = 0;
+        totaltransection = 0;
+
+        document.querySelector(".amount").textContent = "0.00";
+        document.querySelector(".amount2").textContent = "0.00";
+        document.querySelector(".amount3").textContent = "0.00";
+        document.querySelector("#total").textContent = "0";
+        document.querySelector(".parenttransection").innerHTML = "";
+
+        chart.data.datasets[0].data = [0, 0];
+        chart.update();
+    });
+}
+resetbtn();
+
