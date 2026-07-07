@@ -298,6 +298,13 @@ document.querySelector("#saveTxBtn").addEventListener("click", function () {
     updateDisplay();
     saveToStorage();
 
+    // Inputs ko clear karo taake next transaction ke liye form khali mile
+    document.querySelector("#txType").value = "expense";
+    document.querySelector("#txAmount").value = "";
+    document.querySelector("#txDesc").value = "";
+    document.querySelector("#txDate").value = "";
+    document.querySelector("#txCat").value = "";
+
     document.querySelector(".modal-overlay").style.display = "none";
 });
 
@@ -363,6 +370,14 @@ document.querySelector(".parenttransection").addEventListener("click", function 
 
 document.querySelector(".ft-add-btn").addEventListener("click", function () {
     editingRow = null;
+
+    // Add button dabane par bhi form khali rahe (purana edit data na dikhe)
+    document.querySelector("#txType").value = "expense";
+    document.querySelector("#txAmount").value = "";
+    document.querySelector("#txDesc").value = "";
+    document.querySelector("#txDate").value = "";
+    document.querySelector("#txCat").value = "";
+
     document.querySelector(".modal-overlay").style.display = "flex";
     closeSidebar();
 });
