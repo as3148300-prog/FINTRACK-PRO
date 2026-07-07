@@ -135,9 +135,7 @@ input:focus { border-color: var(--primary); }
   color: var(--text-white);
   font-family: Arial, sans-serif;
   position: relative;
-}
-
-/* ===== SIDEBAR ===== */
+} 
 .ft-sidebar {
   width: 221px;
   background-color: var(--sidebar-bg);
